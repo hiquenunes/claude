@@ -1,0 +1,26 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+.next/
+out/
+
+# env
+.env
+.env.local
+.env.*.local
+
+# misc
+.DS_Store
+*.log
+npm-debug.log*
+
+# Next.js
+web/next-env.d.ts
+web/AGENTS.md
+web/CLAUDE.md
+
+# editor
+.vscode/
+.idea/
