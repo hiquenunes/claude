@@ -8,3 +8,7 @@ Segundo cérebro do Henrique. Sem código, sem servidor, sem credencial para con
 A pasta "Jarvis" já existe no Drive, com um documento "Como isso funciona" na raiz explicando a convenção — qualquer conversa do Claude com o Drive conectado pode operar a partir dali, mesmo sem ter lido este repositório.
 
 Este repositório existe só como registro/documentação da arquitetura — não há nada para instalar, buildar ou rodar aqui.
+
+## Site da Nunes Auditores
+
+A pasta [`nunes-site/`](nunes-site/) contém o site institucional da Nunes Auditores (HTML/CSS/JS estático + formulário em PHP), com segurança, SEO e GEO aplicados. Guia de publicação: [`nunes-site/LEIA-ME.md`](nunes-site/LEIA-ME.md).
