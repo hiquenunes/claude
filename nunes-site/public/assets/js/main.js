@@ -37,8 +37,6 @@
   if (!form) { return; }
 
   var status = document.getElementById('form-status');
-  var inicio = form.querySelector('input[name="_t"]');
-  if (inicio) { inicio.value = String(Math.floor(Date.now() / 1000)); }
 
   /* Pré-seleciona o assunto vindo da página de serviços (?assunto=...) */
   var params = new URLSearchParams(window.location.search);
@@ -46,11 +44,6 @@
   var select = document.getElementById('assunto');
   if (assunto && select && select.querySelector('option[value="' + assunto.replace(/[^a-z-]/g, '') + '"]')) {
     select.value = assunto.replace(/[^a-z-]/g, '');
-  }
-  if (params.get('erro') === '1' && status) {
-    status.className = 'aviso aviso--erro';
-    status.textContent = 'Não foi possível enviar sua mensagem. Confira os campos e tente de novo, ou ligue para (51) 99993-7682.';
-    status.hidden = false;
   }
 
   var mensagens = {
@@ -73,8 +66,17 @@
     return ok;
   }
 
+  /* O erro some assim que o campo é corrigido (ao digitar ou marcar), e não ao sair dele:
+     se sumisse no blur, o botão Enviar mudaria de lugar no meio do clique e o envio se perderia. */
   Array.prototype.forEach.call(form.querySelectorAll('[data-validar]'), function (campo) {
-    campo.addEventListener('blur', function () { validar(campo); });
+    var revalidar = function () {
+      if (campo.getAttribute('aria-invalid') === 'true') { validar(campo); }
+    };
+    campo.addEventListener('input', revalidar);
+    campo.addEventListener('change', revalidar);
+    campo.addEventListener('blur', function () {
+      if (campo.type !== 'checkbox' && campo.value !== '') { validar(campo); }
+    });
   });
 
   function mostrar(tipo, texto) {
@@ -95,31 +97,29 @@
       primeiroInvalido.focus();
       return;
     }
-    if (!window.fetch || !window.FormData) { return; } /* envio tradicional */
+    if (!window.fetch || !window.FormData || !window.URLSearchParams) { return; } /* envio tradicional */
     e.preventDefault();
     var enviar = form.querySelector('button[type="submit"]');
     enviar.disabled = true;
     enviar.textContent = 'Enviando…';
-    fetch(form.action, {
+    /* Netlify Forms: envio em x-www-form-urlencoded para a raiz do site */
+    fetch('/', {
       method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' },
+      body: new URLSearchParams(new FormData(form)).toString(),
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       credentials: 'same-origin'
     }).then(function (r) {
-      return r.json().catch(function () { return { ok: false }; });
-    }).then(function (dados) {
-      if (dados && dados.ok) {
+      if (r.ok) {
         form.reset();
         mostrar('sucesso', 'Mensagem enviada. Respondemos em horário comercial, de segunda a sexta, das 9h às 18h.');
       } else {
-        mostrar('erro', (dados && dados.erro) || 'Não foi possível enviar agora. Tente de novo em alguns minutos ou ligue para (51) 99993-7682.');
+        mostrar('erro', 'Não foi possível enviar agora. Tente de novo em alguns minutos ou ligue para (51) 99993-7682.');
       }
     }).catch(function () {
       mostrar('erro', 'Sem conexão com o servidor. Verifique sua internet ou ligue para (51) 99993-7682.');
     }).then(function () {
       enviar.disabled = false;
       enviar.textContent = 'Enviar mensagem';
-      if (inicio) { inicio.value = String(Math.floor(Date.now() / 1000)); }
     });
   });
 })();

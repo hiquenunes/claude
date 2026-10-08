@@ -69,20 +69,20 @@
 <a class="btn btn-primario" href="https://wa.me/5551999937682" rel="noopener noreferrer" target="_blank">Falar pelo WhatsApp</a>
 </div>
 
-<form class="formulario" id="form-contato" action="/contato/enviar.php" method="post" novalidate>
+<form class="formulario" id="form-contato" name="contato" action="/contato/obrigado/" method="post" data-netlify="true" netlify-honeypot="website" novalidate>
+<input type="hidden" name="form-name" value="contato">
 <h2>Envie uma mensagem</h2>
 <p class="texto">Campos marcados com * são obrigatórios.</p>
 <div id="form-status" class="aviso" role="status" tabindex="-1" hidden></div>
 <div class="campos">
 <div class="campo"><label for="nome">Nome *</label><input id="nome" name="nome" type="text" autocomplete="name" required maxlength="120" data-validar aria-describedby="erro-nome"><span class="campo__erro" id="erro-nome"></span></div>
 <div class="campo"><label for="email">E-mail *</label><input id="email" name="email" type="email" autocomplete="email" required maxlength="160" data-validar aria-describedby="erro-email"><span class="campo__erro" id="erro-email"></span></div>
-<div class="campo"><label for="telefone">Telefone <span>(opcional)</span></label><input id="telefone" name="telefone" type="tel" autocomplete="tel" maxlength="20" pattern="[0-9()+\s.-]{8,20}" data-validar aria-describedby="erro-telefone"><span class="campo__erro" id="erro-telefone"></span></div>
+<div class="campo"><label for="telefone">Telefone <span>(opcional)</span></label><input id="telefone" name="telefone" type="tel" autocomplete="tel" maxlength="20" pattern="[0-9\s\(\)\.\+\-]{8,20}" data-validar aria-describedby="erro-telefone"><span class="campo__erro" id="erro-telefone"></span></div>
 <div class="campo"><label for="empresa">Empresa <span>(opcional)</span></label><input id="empresa" name="empresa" type="text" autocomplete="organization" maxlength="120"></div>
 <div class="campo campo--inteiro"><label for="assunto">Assunto</label><select id="assunto" name="assunto"><option value="">Selecione</option><option value="auditoria-independente">Auditoria Independente</option><option value="consultoria-contabil">Consultoria Contábil</option><option value="consultoria-empresarial">Consultoria Empresarial</option><option value="recuperacao-tributaria">Recuperação Tributária</option><option value="due-diligence">Due Diligence</option><option value="pericia-contabil">Perícia Contábil</option><option value="outro">Outro assunto</option></select></div>
 <div class="campo campo--inteiro"><label for="mensagem">Mensagem *</label><textarea id="mensagem" name="mensagem" required minlength="10" maxlength="3000" data-validar aria-describedby="erro-mensagem"></textarea><span class="campo__erro" id="erro-mensagem"></span></div>
 </div>
 <div class="armadilha" aria-hidden="true"><label for="website">Não preencha este campo</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
-<input type="hidden" name="_t" value="0">
 <div>
 <label class="consentimento" for="consentimento"><input id="consentimento" name="consentimento" type="checkbox" value="sim" required data-validar aria-describedby="erro-consentimento"><span>Autorizo a Nunes Auditores a usar os dados acima somente para responder a este contato, conforme a <a href="/politica-de-privacidade/">Política de Privacidade</a>.</span></label>
 <span class="campo__erro" id="erro-consentimento"></span>

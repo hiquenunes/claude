@@ -11,4 +11,4 @@ Este repositório existe só como registro/documentação da arquitetura — nã
 
 ## Site da Nunes Auditores
 
-A pasta [`nunes-site/`](nunes-site/) contém o site institucional da Nunes Auditores (HTML/CSS/JS estático + formulário em PHP), com segurança, SEO e GEO aplicados. Guia de publicação: [`nunes-site/LEIA-ME.md`](nunes-site/LEIA-ME.md).
+A pasta [`nunes-site/`](nunes-site/) contém o site institucional da Nunes Auditores (HTML/CSS/JS estático), hospedado na Netlify com publicação automática a partir deste repositório (ver `netlify.toml`), com segurança, SEO e GEO aplicados. Guia de publicação: [`nunes-site/LEIA-ME.md`](nunes-site/LEIA-ME.md).

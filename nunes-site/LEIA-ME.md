@@ -1,23 +1,23 @@
 # Site Nunes Auditores — guia de publicação
 
 Site estático em HTML, CSS e JavaScript puro, na direção visual "Institucional Clássica".
-Não depende de WordPress, banco de dados nem serviços de terceiros. O único arquivo que roda no servidor é o formulário, em `contato/enviar.php`.
+Hospedado na **Netlify**, publicado automaticamente a partir deste repositório no GitHub. Não depende de WordPress, banco de dados, PHP nem serviços de terceiros no navegador do visitante. O formulário de contato usa o **Netlify Forms**.
 
 ## Estrutura
 
 ```
-public/                       ← enviar TODO o conteúdo desta pasta para a raiz do domínio
-  index.html                  Home
-  sobre/  servicos/  conteudos/  contato/  politica-de-privacidade/
-  contato/enviar.php          recebe o formulário e envia por e-mail
-  contato/obrigado/           confirmação (fora do Google)
-  404.html                    página de erro
-  assets/css, js, fonts, img  estilos, script, fontes próprias e imagens
-  robots.txt  sitemap.xml  llms.txt  site.webmanifest  favicon.ico
-  .htaccess                   HTTPS, segurança e cache (Apache)
-  _headers                    o mesmo, para Netlify ou Cloudflare Pages
-  .well-known/security.txt    contato para relato de falhas de segurança
-_modelos/                     NÃO publicar: modelo de artigo para a área Conteúdos
+netlify.toml                  (na raiz do repositório) diz à Netlify para publicar nunes-site/public
+nunes-site/
+  public/                     ← o site publicado
+    index.html                Home
+    sobre/  servicos/  conteudos/  contato/  politica-de-privacidade/
+    contato/obrigado/         confirmação do formulário (fora do Google)
+    404.html                  página de erro
+    assets/css, js, fonts, img  estilos, script, fontes próprias e imagens
+    robots.txt  sitemap.xml  llms.txt  site.webmanifest  favicon.ico
+    _headers                  segurança e cache (lido pela Netlify)
+    .well-known/security.txt  contato para relato de falhas de segurança
+  _modelos/                   NÃO é publicado: modelo de artigo para a área Conteúdos
 ```
 
 ## Antes de publicar
@@ -27,25 +27,44 @@ _modelos/                     NÃO publicar: modelo de artigo para a área Conte
    - Foto do topo da Home: salvar como `assets/img/hero.webp` (1920×1080, até 300 KB) e descomentar a linha indicada em `assets/css/style.css`.
    - Retrato do Paulo: `assets/img/paulo-nunes.webp` (800×1000). Escritório: `assets/img/escritorio.webp` (1200×900).
    - Use `<img ... width="" height="" alt="descrição" loading="lazy">`. O `alt` deve descrever a foto.
-3. **Política de Privacidade:** o texto é uma base e precisa de revisão jurídica.
-4. **E-mail do formulário:** criar a caixa `site@nunesauditores.com.br` (remetente) e configurar SPF, DKIM e DMARC do domínio, para os e-mails não caírem no spam.
-5. **Domínio:** o site considera `https://nunesauditores.com.br` (sem www) como endereço oficial. Se preferir com www, trocar em todos os arquivos.
+3. **Política de Privacidade:** o texto é uma base e precisa de revisão jurídica. Ela deve mencionar que as mensagens do formulário ficam armazenadas na Netlify (provedor de hospedagem) até serem apagadas.
+4. **Domínio:** o site considera `https://nunesauditores.com.br` (sem www) como endereço oficial.
 
-## Hospedagem
+## Publicar na Netlify (uma única vez)
 
-- **Apache com PHP** (Hostinger, Locaweb, HostGator, KingHost etc.): enviar a pasta `public/` para `public_html`. O `.htaccess` já força HTTPS, tira o www e aplica os cabeçalhos de segurança. Ativar o SSL gratuito (Let's Encrypt) no painel antes.
-- **Netlify ou Cloudflare Pages:** funcionam com o `_headers`, mas não rodam PHP. Nesse caso, trocar o formulário por um serviço como Netlify Forms ou Formspree e incluir o domínio do serviço em `form-action` e `connect-src` da política de segurança.
-- **Nginx:** replicar os cabeçalhos do `_headers` no bloco `server`.
+### 1. Criar o site
+1. Acesse https://app.netlify.com e entre com a conta do **GitHub**.
+2. **Add new project → Import an existing project → GitHub** e escolha o repositório `hiquenunes/claude`.
+3. Em **Branch to deploy**, escolha a branch onde o site está (depois de aprovado, a `main`).
+4. Os demais campos já vêm do `netlify.toml` (pasta `nunes-site/public`, sem comando de build). Clique em **Deploy**.
+5. Em um minuto o site abre num endereço provisório `algum-nome.netlify.app`. Confira se está tudo certo.
+
+### 2. Ativar o formulário
+1. No painel do site: **Forms → Enable form detection** e faça um novo deploy (**Deploys → Trigger deploy**). O formulário "contato" aparece na lista.
+2. **Forms → Form notifications → Add notification → Email notification**: formulário `contato`, e-mail `auditoria@nunesauditores.com.br`.
+3. Teste: envie uma mensagem pela página Contato e confira se chegou no e-mail e em **Forms**.
+4. A Netlify filtra spam automaticamente (Akismet + campo-armadilha do formulário). Mensagens suspeitas ficam em **Forms → Spam submissions**; vale olhar de vez em quando.
+
+### 3. Conectar o domínio nunesauditores.com.br
+1. **Domain management → Add a domain** → `nunesauditores.com.br`. Quando perguntar, adicione também o `www`.
+2. Defina `nunesauditores.com.br` (sem www) como **domínio principal (primary domain)**. A Netlify redireciona o www sozinha.
+3. A Netlify mostra os apontamentos a criar. Normalmente são:
+   - Registro **A** para `nunesauditores.com.br` → IP do balanceador da Netlify (o painel mostra o número, hoje `75.2.60.5`).
+   - Registro **CNAME** para `www` → `algum-nome.netlify.app`.
+4. No **Registro.br** (ou onde o DNS do domínio estiver): editar a zona DNS e criar/alterar **somente** esses dois registros. **Não apague os registros MX, SPF (TXT) e de verificação do e-mail**, senão o e-mail do escritório para de funcionar. Se já existir um registro A ou CNAME antigo para o site, substitua-o.
+5. Aguarde a propagação (de minutos a algumas horas). A Netlify emite o certificado HTTPS (Let's Encrypt) sozinha. Depois, em **HTTPS**, confirme que o certificado está ativo.
+
+### Daqui em diante
+Toda alteração enviada para a branch publicada vai ao ar sozinha em cerca de um minuto. Não é preciso enviar arquivos nem mexer no painel.
 
 ## Segurança aplicada
 
-- HTTPS obrigatório, HSTS e endereço único.
+- HTTPS obrigatório (Netlify), HSTS e endereço único (sem www).
 - Content-Security-Policy restrita: só carrega arquivos do próprio site (sem scripts, fontes ou estilos de terceiros), sem estilos ou scripts embutidos.
 - Proteção contra clickjacking, MIME sniffing e vazamento de referência; recursos do navegador (câmera, microfone, localização) bloqueados.
-- Listagem de pastas desligada e arquivos ocultos bloqueados.
-- Formulário: só aceita envio a partir do próprio domínio, tem campo-armadilha e tempo mínimo contra robôs, limite de 5 envios por IP por hora, validação e limpeza de todos os campos e bloqueio de injeção de cabeçalhos de e-mail. Nenhum dado é gravado no servidor.
+- Formulário: campo-armadilha contra robôs, filtro de spam da Netlify, validação no navegador, limites de tamanho e consentimento LGPD obrigatório. Os dados ficam na conta Netlify, não em servidor próprio.
 - Fontes auto-hospedadas: nenhum dado do visitante vai para o Google Fonts (LGPD).
-- Sem cookies nem rastreadores, por isso o site não precisa de banner de cookies. Se adicionar Google Analytics ou Meta Pixel, será preciso banner de consentimento e ajuste da CSP.
+- Sem cookies nem rastreadores, por isso o site não precisa de banner de cookies. Se adicionar Google Analytics ou Meta Pixel, será preciso banner de consentimento e ajuste da CSP em `_headers`.
 
 ## SEO aplicado
 
@@ -53,7 +72,7 @@ _modelos/                     NÃO publicar: modelo de artigo para a área Conte
 - Open Graph e Twitter Card com imagem de compartilhamento (1200×630).
 - Dados estruturados (JSON-LD): AccountingService com endereço, horário, telefone e CNPJ; Pessoa (Paulo Nunes); WebSite; páginas com BreadcrumbList; Serviços; FAQPage na Home.
 - `sitemap.xml` e `robots.txt`; páginas de confirmação e erro com `noindex`.
-- Desempenho: sem bibliotecas externas, fontes pré-carregadas, imagens WebP com tamanho declarado e carregamento tardio.
+- Desempenho: sem bibliotecas externas, fontes pré-carregadas, imagens WebP com tamanho declarado e carregamento tardio, CDN da Netlify.
 - Acessibilidade: link "pular para o conteúdo", foco visível, menu acessível por teclado, contraste AA.
 
 ## GEO (otimização para buscas com IA)

@@ -1,0 +1,6 @@
+# Netlify — publica o site da Nunes Auditores direto deste repositório.
+# Não há etapa de build: os arquivos de nunes-site/public já são o site final.
+# Cabeçalhos de segurança e cache ficam em nunes-site/public/_headers.
+[build]
+  publish = "nunes-site/public"
+  command = ""
