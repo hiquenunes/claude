@@ -1,0 +1,378 @@
+<title>Aprovação Dos 2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,400&family=Figtree:wght@400;500;600;700&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+/* Layout: coluna única no ritmo do feed do Instagram (470px), barra de status fixa no topo, grade 3×N como visão do perfil. */
+:root{
+  --bg:#F6F3EF; --surface:#FFFFFF; --ink:#1F1A19; --muted:#776C69; --line:#E6DFDA;
+  --brand:#5A1A2B; --brand-ink:#FFFFFF; --gold:#C98A1E;
+  --ok:#1F7A4D; --ok-bg:#E3F3EA; --warn:#A8560B; --warn-bg:#FBEBD9; --idle:#6E6563; --idle-bg:#EFEAE7;
+  --display:"Fraunces",Georgia,serif; --ui:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141112; --surface:#1D191A; --ink:#F2ECE9; --muted:#A79C99; --line:#332C2D;
+  --brand:#C2566F; --brand-ink:#FFFFFF; --gold:#E9A93A;
+  --ok:#5BC48E; --ok-bg:#16301F; --warn:#F0A55A; --warn-bg:#3A2614; --idle:#B4AAA7; --idle-bg:#2A2425; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141112; --surface:#1D191A; --ink:#F2ECE9; --muted:#A79C99; --line:#332C2D;
+  --brand:#C2566F; --brand-ink:#FFFFFF; --gold:#E9A93A;
+  --ok:#5BC48E; --ok-bg:#16301F; --warn:#F0A55A; --warn-bg:#3A2614; --idle:#B4AAA7; --idle-bg:#2A2425; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--ui);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:1px solid var(--line);
+  padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.bar-in{max-width:935px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.studio{font-family:var(--display);font-weight:600;font-size:19px;letter-spacing:-.3px;margin-right:auto}
+.studio small{font-family:var(--ui);font-weight:500;font-size:12px;color:var(--muted);letter-spacing:.4px;margin-left:6px}
+.seg{display:flex;background:var(--idle-bg);border-radius:999px;padding:3px}
+.seg button{border:0;background:none;padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+
+.wrap{max-width:935px;margin:0 auto;padding-block:28px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+.profile{display:flex;gap:28px;align-items:center;max-width:620px;margin:0 auto 22px}
+.avatar{flex:none;width:88px;height:88px;border-radius:50%;background:#5A1A2B;color:#F3EEE6;display:grid;place-items:center;
+  font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:-.5px;box-shadow:0 0 0 3px var(--bg),0 0 0 5px var(--gold)}
+.avatar.sm{width:34px;height:34px;font-size:12px;box-shadow:0 0 0 2px var(--surface),0 0 0 3.5px var(--gold)}
+.pinfo{min-width:0;display:flex;flex-direction:column;gap:6px}
+.handle{font-size:20px;font-weight:600}
+.counts{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.counts b{color:var(--ink);font-variant-numeric:tabular-nums}
+.bio{font-size:14px}
+.bio span{color:var(--muted)}
+
+.filters{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:0 auto 26px;max-width:620px;border-top:1px solid var(--line);padding-top:16px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.chip b{font-variant-numeric:tabular-nums;margin-left:4px;font-weight:700}
+
+.notice{max-width:470px;margin:0 auto 18px;font-size:13px;color:var(--muted);background:var(--idle-bg);border-radius:10px;padding:10px 14px}
+
+/* Feed */
+.feed{display:flex;flex-direction:column;gap:28px;align-items:center}
+.post{width:100%;max-width:470px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.post.flash{animation:flash 1.4s ease}
+@keyframes flash{0%{box-shadow:0 0 0 3px var(--gold)}100%{box-shadow:0 0 0 0 transparent}}
+.ph{display:flex;align-items:center;gap:10px;padding:12px 14px}
+.ph-meta{min-width:0;flex:1;display:flex;flex-direction:column;line-height:1.25}
+.ph-meta b{font-size:14px}
+.ph-meta span{font-size:12px;color:var(--muted)}
+.pill{flex:none;font-size:12px;font-weight:700;border-radius:999px;padding:4px 10px;letter-spacing:.2px}
+.pill.pendente{background:var(--idle-bg);color:var(--idle)}
+.pill.aprovado{background:var(--ok-bg);color:var(--ok)}
+.pill.ajuste{background:var(--warn-bg);color:var(--warn)}
+
+.media{position:relative;background:#000;aspect-ratio:4/5;max-width:100%}
+.track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;height:100%;scrollbar-width:none}
+.track::-webkit-scrollbar{display:none}
+.track img{flex:none;width:100%;height:100%;object-fit:cover;scroll-snap-align:start;display:block}
+.nav{position:absolute;top:50%;transform:translateY(-50%);width:30px;height:30px;border-radius:50%;border:0;background:rgba(255,255,255,.88);color:#1F1A19;
+  display:grid;place-items:center;font-size:16px;line-height:1;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.nav.prev{left:10px}.nav.next{right:10px}
+.count{position:absolute;top:12px;right:12px;background:rgba(20,17,18,.7);color:#fff;font-size:12px;font-weight:600;border-radius:999px;padding:3px 9px;font-variant-numeric:tabular-nums}
+.dots{display:flex;gap:4px;justify-content:center;padding-top:10px}
+.dots i{width:6px;height:6px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--brand)}
+
+.actions{display:flex;gap:8px;padding:12px 14px 4px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 14px;font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:7px}
+.btn:hover{border-color:var(--muted)}
+.btn.approve[aria-pressed="true"]{background:var(--ok);border-color:var(--ok);color:#fff}
+.btn.adjust[aria-pressed="true"]{background:var(--warn);border-color:var(--warn);color:#fff}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
+.btn.dl{margin-left:auto}
+.btn:disabled{opacity:.5;cursor:default}
+.btn svg{width:16px;height:16px;flex:none}
+
+.cap{padding:10px 14px 4px;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}
+.cap b{font-weight:700;margin-right:4px}
+.tags{color:var(--brand)}
+.capbar{display:flex;gap:14px;padding:4px 14px 12px;font-size:13px}
+.link{border:0;background:none;padding:0;color:var(--muted);font-weight:600}
+.link:hover{color:var(--ink)}
+
+.note{margin:0 14px 12px;padding:10px 12px;border-radius:10px;background:var(--idle-bg);font-size:13px}
+.note h4{margin:0 0 3px;font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted)}
+.note.client{background:var(--warn-bg)}
+.note.client h4{color:var(--warn)}
+
+.adjbox{margin:0 14px 14px;display:flex;flex-direction:column;gap:8px}
+.adjbox label{font-size:13px;font-weight:600}
+.adjbox textarea{width:100%;min-height:84px;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;font-size:14px;background:var(--bg);color:var(--ink)}
+.adjbox .row{display:flex;gap:8px;justify-content:flex-end}
+
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);
+  padding:10px 16px;border-radius:10px;font-size:14px;font-weight:600;z-index:20;max-width:calc(100% - 32px)}
+
+/* Grade */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;max-width:935px;margin:0 auto}
+.cell{position:relative;border:0;padding:0;background:#000;aspect-ratio:4/5;overflow:hidden;max-width:100%}
+.cell img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .2s}
+.cell:hover img{opacity:.85}
+.cell .pill{position:absolute;left:8px;bottom:8px}
+.cell .stack{position:absolute;top:8px;right:8px;width:20px;height:20px;color:#fff;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+
+.empty{max-width:470px;margin:40px auto;text-align:center;color:var(--muted)}
+.empty h3{font-family:var(--display);font-weight:600;color:var(--ink);font-size:22px;margin:0 0 6px}
+
+@media (max-width:520px){
+  .profile{gap:16px}.avatar{width:68px;height:68px;font-size:20px}
+  .btn{padding:8px 11px;font-size:13px}
+  .post{border-radius:10px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<header class="bar"><div class="bar-in">
+  <div class="studio">Estúdio <small>aprovação de posts</small></div>
+  <div class="seg" role="group" aria-label="Visualização">
+    <button id="v-feed" aria-pressed="true">Feed</button>
+    <button id="v-grid" aria-pressed="false">Grade</button>
+  </div>
+</div></header>
+
+<main class="wrap">
+  <section class="profile">
+    <div class="avatar" aria-hidden="true">D2</div>
+    <div class="pinfo">
+      <div class="handle" id="handle"></div>
+      <div class="counts" id="counts"></div>
+      <div class="bio" id="bio"></div>
+    </div>
+  </section>
+  <nav class="filters" id="filters" aria-label="Filtrar por status"></nav>
+  <p class="notice" id="notice" hidden></p>
+  <section id="feed" class="feed"></section>
+  <section id="grid" class="grid" hidden></section>
+</main>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script type="application/json" id="feed-data">/*FEED*/</script>
+<script>
+const FEED = JSON.parse(document.getElementById('feed-data').textContent);
+const STATUS = {pendente:'Pendente', aprovado:'Aprovado', ajuste:'Ajuste pedido'};
+const reviews = {};           // postId -> {status, note, updatedAt}
+const openAdjust = new Set(); // posts com a caixa de ajuste aberta
+let filter = 'todos', view = 'feed', store = null, downloads = null;
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const statusOf = id => reviews[id]?.status || 'pendente';
+const fmtDate = d => new Date(d + 'T12:00:00').toLocaleDateString('pt-BR', {weekday:'short', day:'numeric', month:'short'});
+const fullCaption = p => p.caption + (p.hashtags?.length ? '\n\n' + p.hashtags.join(' ') : '');
+const ICON = {
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+  pen:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16v4z"/></svg>',
+  down:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>',
+  stack:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 3h11a3 3 0 013 3v11h-2V6a1 1 0 00-1-1H7V3z"/><rect x="3" y="7" width="14" height="14" rx="2.5"/></svg>',
+};
+
+function toast(msg){
+  const t = $('#toast'); t.textContent = msg; t.hidden = false;
+  clearTimeout(toast.t); toast.t = setTimeout(() => t.hidden = true, 2600);
+}
+
+/* ---------- Armazenamento: banco compartilhado do artifact, ou este navegador como reserva ---------- */
+const local = {
+  key: 'reviews-' + FEED.client.slug,
+  load(){ try { return JSON.parse(localStorage.getItem(this.key) || '{}'); } catch { return {}; } },
+  save(all){ try { localStorage.setItem(this.key, JSON.stringify(all)); } catch {} },
+};
+
+async function saveReview(id, patch){
+  const prev = reviews[id];
+  const next = {...(prev || {}), ...patch, updatedAt: new Date().toISOString()};
+  reviews[id] = next; render();
+  if (store) {
+    try { await store.collection('reviews').doc(id).set(next); }
+    catch (e) {
+      if (prev) reviews[id] = prev; else delete reviews[id];
+      render();
+      toast(e?.code === 'permission_denied' || e?.code === 'not_granted'
+        ? 'Você só tem acesso de leitura. Peça acesso de edição para aprovar.'
+        : 'Não deu para salvar agora. Tente de novo em instantes.');
+      return false;
+    }
+  } else local.save(reviews);
+  return true;
+}
+
+/* ---------- Ações ---------- */
+async function setStatus(id, status){
+  const cur = statusOf(id);
+  if (status === 'ajuste') {
+    if (openAdjust.has(id)) openAdjust.delete(id); else openAdjust.add(id);
+    render(); if (openAdjust.has(id)) document.getElementById('adj-' + id)?.focus();
+    return;
+  }
+  const nextStatus = cur === status ? 'pendente' : status;
+  if (await saveReview(id, {status: nextStatus})) toast(nextStatus === 'aprovado' ? 'Post aprovado' : 'Aprovação desfeita');
+}
+async function sendAdjust(id){
+  const note = document.getElementById('adj-' + id).value.trim();
+  if (!note) { toast('Escreva o que precisa mudar'); return; }
+  openAdjust.delete(id);
+  if (await saveReview(id, {status:'ajuste', note})) toast('Pedido de ajuste salvo');
+}
+async function copyCaption(id){
+  const p = FEED.posts.find(x => x.id === id);
+  try { await navigator.clipboard.writeText(fullCaption(p)); toast('Legenda copiada'); }
+  catch {
+    const el = document.getElementById('cap-' + id);
+    const r = document.createRange(); r.selectNodeContents(el);
+    const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    toast('Legenda selecionada. Use Copiar do seu aparelho.');
+  }
+}
+async function download(id, btn){
+  const p = FEED.posts.find(x => x.id === id);
+  if (!downloads) { toast('Download indisponível nesta visualização'); return; }
+  btn.disabled = true;
+  try {
+    const blobs = await Promise.all(p.images.map(src => fetch(src).then(r => { if (!r.ok) throw 0; return r.blob(); })));
+    if (p.images.length === 1) {
+      await downloads.save({filename: p.id + '.png', data: blobs[0]});
+    } else {
+      const zip = new JSZip();
+      blobs.forEach((b, i) => zip.file(`${p.id}-${i + 1}.png`, b));
+      zip.file('legenda.txt', fullCaption(p));
+      await downloads.save({filename: p.id + '.zip', data: await zip.generateAsync({type:'blob'})});
+    }
+    toast('Arquivo salvo');
+  } catch (e) {
+    const code = e?.code;
+    if (code === 'declined') {}
+    else if (code === 'rate_limited') toast('Já tem um download aguardando confirmação');
+    else toast('Não foi possível baixar agora');
+  } finally { btn.disabled = false; }
+}
+
+/* ---------- Render ---------- */
+function counts(){
+  const c = {todos: FEED.posts.length, pendente:0, aprovado:0, ajuste:0};
+  FEED.posts.forEach(p => c[statusOf(p.id)]++);
+  return c;
+}
+function renderHeader(){
+  const c = counts();
+  $('#handle').textContent = FEED.client.handle;
+  $('#counts').innerHTML = `<span><b>${c.todos}</b> posts no lote</span><span><b>${c.aprovado}</b> aprovados</span><span><b>${c.ajuste}</b> com ajuste</span>`;
+  $('#bio').innerHTML = `<strong>${esc(FEED.client.name)}</strong><br><span>${esc(FEED.client.address)} · ${esc(FEED.client.location)}</span><br><span>${esc(FEED.batch)}</span>`;
+  const labels = {todos:'Todos', pendente:'Pendentes', aprovado:'Aprovados', ajuste:'Ajustes'};
+  $('#filters').innerHTML = Object.keys(labels).map(k =>
+    `<button class="chip" data-filter="${k}" aria-pressed="${filter === k}">${labels[k]}<b>${c[k]}</b></button>`).join('');
+}
+function visible(){ return FEED.posts.filter(p => filter === 'todos' || statusOf(p.id) === filter); }
+
+function postHTML(p){
+  const st = statusOf(p.id), r = reviews[p.id] || {}, multi = p.images.length > 1;
+  return `<article class="post" id="post-${p.id}" data-id="${p.id}">
+    <div class="ph"><div class="avatar sm" aria-hidden="true">D2</div>
+      <div class="ph-meta"><b>${esc(FEED.client.handle)}</b><span>${esc(fmtDate(p.date))} · ${esc(p.format)}</span></div>
+      <span class="pill ${st}">${STATUS[st]}</span></div>
+    <div class="media">
+      <div class="track" data-track>${p.images.map((src, i) => `<img src="${esc(src)}" alt="Arte ${i + 1} de ${p.images.length} do post ${esc(p.id)}" loading="lazy">`).join('')}</div>
+      ${multi ? `<button class="nav prev" data-nav="-1" aria-label="Card anterior" hidden>‹</button><button class="nav next" data-nav="1" aria-label="Próximo card">›</button><span class="count" data-count>1/${p.images.length}</span>` : ''}
+    </div>
+    ${multi ? `<div class="dots" data-dots>${p.images.map((_, i) => `<i class="${i ? '' : 'on'}"></i>`).join('')}</div>` : ''}
+    <div class="actions">
+      <button class="btn approve" data-act="aprovado" aria-pressed="${st === 'aprovado'}">${ICON.check}${st === 'aprovado' ? 'Aprovado' : 'Aprovar'}</button>
+      <button class="btn adjust" data-act="ajuste" aria-pressed="${st === 'ajuste' || openAdjust.has(p.id)}">${ICON.pen}Pedir ajuste</button>
+      <button class="btn dl" data-act="download" ${downloads ? '' : 'hidden'}>${ICON.down}${multi ? 'Baixar .zip' : 'Baixar PNG'}</button>
+    </div>
+    <div class="cap" id="cap-${p.id}"><b>${esc(FEED.client.handle)}</b>${esc(p.caption)}${p.hashtags?.length ? `\n\n<span class="tags">${esc(p.hashtags.join(' '))}</span>` : ''}</div>
+    <div class="capbar"><button class="link" data-act="copy">Copiar legenda</button></div>
+    ${st === 'ajuste' && r.note && !openAdjust.has(p.id) ? `<div class="note client"><h4>Ajuste pedido</h4>${esc(r.note)}</div>` : ''}
+    ${openAdjust.has(p.id) ? `<div class="adjbox"><label for="adj-${p.id}">O que precisa mudar?</label>
+      <textarea id="adj-${p.id}" placeholder="Ex.: trocar o horário do jantar para 19h, usar a foto do petisco">${esc(r.note || '')}</textarea>
+      <div class="row"><button class="btn" data-act="cancel">Cancelar</button><button class="btn primary" data-act="send">Salvar pedido</button></div></div>` : ''}
+    ${p.notes ? `<div class="note"><h4>Nota da produção</h4>${esc(p.notes)}</div>` : ''}
+  </article>`;
+}
+
+function render(){
+  renderHeader();
+  const list = visible();
+  $('#v-feed').setAttribute('aria-pressed', view === 'feed');
+  $('#v-grid').setAttribute('aria-pressed', view === 'grid');
+  $('#feed').hidden = view !== 'feed'; $('#grid').hidden = view !== 'grid';
+  const empty = `<div class="empty"><h3>Nada por aqui</h3>Nenhum post com esse status. Escolha outro filtro acima.</div>`;
+  if (view === 'feed') {
+    // Preserva o texto em edição e a posição de cada carrossel entre renders.
+    const drafts = {}, pos = {};
+    document.querySelectorAll('.adjbox textarea').forEach(t => drafts[t.id] = t.value);
+    document.querySelectorAll('.post').forEach(a => pos[a.dataset.id] = a.querySelector('[data-track]').scrollLeft);
+    $('#feed').innerHTML = list.length ? list.map(postHTML).join('') : empty;
+    Object.entries(drafts).forEach(([k, v]) => { const t = document.getElementById(k); if (t) t.value = v; });
+    document.querySelectorAll('.post').forEach(a => { const t = a.querySelector('[data-track]'); if (pos[a.dataset.id]) { t.scrollLeft = pos[a.dataset.id]; syncCarousel(t); } });
+  } else {
+    $('#grid').innerHTML = list.length ? list.map(p => { const st = statusOf(p.id); return `<button class="cell" data-open="${p.id}" aria-label="Abrir post ${esc(p.id)}">
+      <img src="${esc(p.images[0])}" alt="" loading="lazy">${p.images.length > 1 ? `<span class="stack">${ICON.stack}</span>` : ''}
+      <span class="pill ${st}">${STATUS[st]}</span></button>`; }).join('') : empty;
+  }
+}
+
+function syncCarousel(track){
+  const post = track.closest('.post'); if (!post) return;
+  const n = track.children.length, i = Math.round(track.scrollLeft / track.clientWidth);
+  post.querySelectorAll('[data-dots] i').forEach((d, k) => d.classList.toggle('on', k === i));
+  const c = post.querySelector('[data-count]'); if (c) c.textContent = `${i + 1}/${n}`;
+  const pv = post.querySelector('.nav.prev'), nx = post.querySelector('.nav.next');
+  if (pv) pv.hidden = i === 0; if (nx) nx.hidden = i === n - 1;
+}
+
+/* ---------- Eventos ---------- */
+document.addEventListener('click', e => {
+  const f = e.target.closest('[data-filter]'); if (f) { filter = f.dataset.filter; render(); return; }
+  const o = e.target.closest('[data-open]');
+  if (o) { view = 'feed'; filter = 'todos'; render(); const el = document.getElementById('post-' + o.dataset.open);
+    el?.scrollIntoView({behavior:'smooth', block:'start'}); el?.classList.add('flash'); setTimeout(() => el?.classList.remove('flash'), 1500); return; }
+  const nav = e.target.closest('[data-nav]');
+  if (nav) { const t = nav.closest('.media').querySelector('[data-track]'); t.scrollBy({left: t.clientWidth * +nav.dataset.nav, behavior:'smooth'}); return; }
+  const a = e.target.closest('[data-act]'); if (!a) return;
+  const id = a.closest('.post').dataset.id, act = a.dataset.act;
+  if (act === 'aprovado' || act === 'ajuste') setStatus(id, act);
+  else if (act === 'send') sendAdjust(id);
+  else if (act === 'cancel') { openAdjust.delete(id); render(); }
+  else if (act === 'copy') copyCaption(id);
+  else if (act === 'download') download(id, a);
+});
+document.addEventListener('scroll', e => { if (e.target.matches?.('[data-track]')) syncCarousel(e.target); }, true);
+$('#v-feed').onclick = () => { view = 'feed'; render(); };
+$('#v-grid').onclick = () => { view = 'grid'; render(); };
+
+/* ---------- Início ---------- */
+Object.assign(reviews, local.load());
+render();
+(async () => {
+  const c = window.claude;
+  const [db, dl] = await Promise.all([
+    c?.use ? c.use('db').catch(() => null) : null,
+    c?.use ? c.use('downloads').catch(() => null) : null,
+  ]);
+  downloads = dl;
+  if (db) {
+    store = db;
+    for (const k in reviews) delete reviews[k];
+    db.collection('reviews').onSnapshot(snap => {
+      for (const k in reviews) delete reviews[k];
+      snap.docs.forEach(d => { reviews[d.id] = d.data(); });
+      render();
+    }, () => { $('#notice').textContent = 'Não foi possível carregar as aprovações. Recarregue a página.'; $('#notice').hidden = false; });
+  } else {
+    $('#notice').textContent = 'Modo local: aprovações ficam salvas só neste navegador.';
+    $('#notice').hidden = false;
+  }
+  render();
+})();
+</script>

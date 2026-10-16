@@ -1,0 +1,63 @@
+{
+  "client": {
+    "slug": "dos2gastrobar",
+    "handle": "dos2gastrobar",
+    "name": "Dos 2 Gastrobar",
+    "location": "Porto Alegre",
+    "address": "Rua Passo da Pátria, 412"
+  },
+  "batch": "Lote 1 · posts sem foto",
+  "generatedAt": "2026-10-16T20:20:41.341Z",
+  "posts": [
+    {
+      "id": "d2-001-horarios",
+      "date": "2026-10-20",
+      "format": "Post único",
+      "caption": "De segunda a sexta tem almoço. De terça a sábado a gente acende a luz de novo pro jantar.\n\nTu sabe onde fica: Rua Passo da Pátria, 412. Salva esse post pra não ter que perguntar depois 😉",
+      "hashtags": [
+        "#dos2gastrobar",
+        "#portoalegre",
+        "#almocopoa",
+        "#barpoa"
+      ],
+      "notes": "Confirmar os horários exatos com o cliente. Dá pra colocar os horários na arte em vez de só os dias.",
+      "images": [
+        "posts/d2-001-horarios.png"
+      ]
+    },
+    {
+      "id": "d2-002-qual-a-boa",
+      "date": "2026-10-23",
+      "format": "Carrossel · 4 cards",
+      "caption": "Sexta-feira e a decisão mais difícil da semana: chopp, espumante ou vinho?\n\nConta nos comentários qual é a tua. Se não conseguir escolher, vem aqui e pede os três, ninguém vai julgar.",
+      "hashtags": [
+        "#dos2gastrobar",
+        "#sextou",
+        "#chopp",
+        "#portoalegre"
+      ],
+      "notes": "Post de interação. Se o cliente tiver marca de chopp ou rótulo de espumante em destaque, vale citar no card.",
+      "images": [
+        "posts/d2-002-qual-a-boa-1.png",
+        "posts/d2-002-qual-a-boa-2.png",
+        "posts/d2-002-qual-a-boa-3.png",
+        "posts/d2-002-qual-a-boa-4.png"
+      ]
+    },
+    {
+      "id": "d2-003-pedido-de-sempre",
+      "date": "2026-10-27",
+      "format": "Post único",
+      "caption": "Aqui quem te atende é quem toca a casa. Por isso a gente lembra do chopp que tu pediu semana passada e de que tu não gosta de cebola no petisco.\n\nMarca aquele amigo que sempre pede a mesma coisa.",
+      "hashtags": [
+        "#dos2gastrobar",
+        "#barpoa",
+        "#portoalegre"
+      ],
+      "notes": "A frase sobre os donos vem das avaliações do Tripadvisor. Confirmar se o cliente quer reforçar isso.",
+      "images": [
+        "posts/d2-003-pedido-de-sempre.png"
+      ]
+    }
+  ]
+}

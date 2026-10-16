@@ -1,0 +1,87 @@
+{
+  "client": {
+    "slug": "dos2gastrobar",
+    "handle": "dos2gastrobar",
+    "name": "Dos 2 Gastrobar",
+    "location": "Porto Alegre",
+    "address": "Rua Passo da Pátria, 412"
+  },
+  "batch": "Lote 1 · posts sem foto",
+  "posts": [
+    {
+      "id": "d2-001-horarios",
+      "date": "2026-10-20",
+      "format": "Post único",
+      "slides": [
+        {
+          "template": "info",
+          "theme": "vinho",
+          "eyebrow": "Pode chegar",
+          "title": "Almoço e jantar,\n<i>no mesmo endereço.</i>",
+          "rows": [
+            ["Almoço", "segunda a sexta"],
+            ["Jantar", "terça a sábado"]
+          ],
+          "footer": "Rua Passo da Pátria, 412 · Porto Alegre"
+        }
+      ],
+      "caption": "De segunda a sexta tem almoço. De terça a sábado a gente acende a luz de novo pro jantar.\n\nTu sabe onde fica: Rua Passo da Pátria, 412. Salva esse post pra não ter que perguntar depois 😉",
+      "hashtags": ["#dos2gastrobar", "#portoalegre", "#almocopoa", "#barpoa"],
+      "notes": "Confirmar os horários exatos com o cliente. Dá pra colocar os horários na arte em vez de só os dias."
+    },
+    {
+      "id": "d2-002-qual-a-boa",
+      "date": "2026-10-23",
+      "format": "Carrossel · 4 cards",
+      "slides": [
+        {
+          "template": "statement",
+          "theme": "carvao",
+          "eyebrow": "Sexta, 18h",
+          "title": "Hoje vai de quê?",
+          "kicker": "arrasta pro lado →"
+        },
+        {
+          "template": "option",
+          "theme": "chopp",
+          "index": "1",
+          "title": "Chopp",
+          "text": "Gelado, tirado na hora, pra começar a conversa."
+        },
+        {
+          "template": "option",
+          "theme": "gelo",
+          "index": "2",
+          "title": "Espumante",
+          "text": "Pra quando tem motivo. E pra quando não tem também."
+        },
+        {
+          "template": "option",
+          "theme": "vinho",
+          "index": "3",
+          "title": "Vinho",
+          "text": "Pra mesa que não tem pressa nenhuma de levantar."
+        }
+      ],
+      "caption": "Sexta-feira e a decisão mais difícil da semana: chopp, espumante ou vinho?\n\nConta nos comentários qual é a tua. Se não conseguir escolher, vem aqui e pede os três, ninguém vai julgar.",
+      "hashtags": ["#dos2gastrobar", "#sextou", "#chopp", "#portoalegre"],
+      "notes": "Post de interação. Se o cliente tiver marca de chopp ou rótulo de espumante em destaque, vale citar no card."
+    },
+    {
+      "id": "d2-003-pedido-de-sempre",
+      "date": "2026-10-27",
+      "format": "Post único",
+      "slides": [
+        {
+          "template": "quote",
+          "theme": "garrafa",
+          "title": "Bar bom é aquele\nonde <i>já sabem\no teu pedido.</i>",
+          "footer": "Atendimento dos donos, todo dia."
+        }
+      ],
+      "caption": "Aqui quem te atende é quem toca a casa. Por isso a gente lembra do chopp que tu pediu semana passada e de que tu não gosta de cebola no petisco.\n\nMarca aquele amigo que sempre pede a mesma coisa.",
+      "hashtags": ["#dos2gastrobar", "#barpoa", "#portoalegre"],
+      "notes": "A frase sobre os donos vem das avaliações do Tripadvisor. Confirmar se o cliente quer reforçar isso."
+    }
+  ]
+}
