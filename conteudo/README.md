@@ -14,10 +14,15 @@ No Claude Code, dentro deste repositório:
 
 A skill está em `.claude/skills/posts-psicojaquelinesauer/SKILL.md` e lê os documentos do cliente antes de criar.
 
+## Estúdio (app para a Jaqueline editar)
+
+https://claude.ai/artifact/Suz1EGtTRhwhY4748peWYC — interface no estilo Instagram (perfil, grade, post, stories) com editor completo, upload de imagem, exportação PNG/ZIP e botão "Pedir ao Claude". Código em `app/editor.src.html`; `python3 conteudo/app/build.py` gera `app/editor.html` com as fontes embutidas.
+
 ## Estrutura
 
 ```
 conteudo/
+├── app/                        Estúdio (editor web publicado como artefato)
 ├── render/render.js            renderizador post.json → PNG (Playwright/Chromium)
 ├── assets/fonts/               fontes (Google Fonts, licença OFL)
 └── psicojaquelinesauer/
