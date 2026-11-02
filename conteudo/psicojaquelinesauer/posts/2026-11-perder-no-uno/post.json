@@ -1,0 +1,63 @@
+{
+  "id": "2026-11-perder-no-uno",
+  "tipo": "feed",
+  "status": "rascunho",
+  "tema": "Perder no jogo como treino de tolerância à frustração",
+  "formato_meme": "Cartaz dramático + subtítulo entre parênteses",
+  "imagem_sugerida": {
+    "filme": "Os Incríveis (Pixar, 2004)",
+    "cena": "Edna Moda séria e decidida (\"Sem capas!\")",
+    "como_usar": "Salvar como imagens/fundo.jpg e renomear \"_imagem\" para \"imagem\". Sem a imagem, o fundo de explosão ilustrado mantém a piada."
+  },
+  "base_teorica": [
+    {
+      "conceito": "Jogo de regras no desenvolvimento",
+      "referencia": "Piaget, J. (1932/1994). O juízo moral na criança. São Paulo: Summus.",
+      "como_aparece": "Respeitar regras e lidar com o resultado do jogo é parte do desenvolvimento social e moral da criança."
+    },
+    {
+      "conceito": "Frustração gradual e suportável",
+      "referencia": "Winnicott, D. W. (1953). Transitional objects and transitional phenomena. International Journal of Psycho-Analysis, 34, 89–97 (ideia da mãe 'suficientemente boa', que falha de forma gradual).",
+      "como_aparece": "Frustrações na medida certa, com um adulto presente, ajudam a criança a crescer."
+    }
+  ],
+  "slides": [
+    {
+      "fundo": {
+        "tipo": "explosao"
+      },
+      "_imagem": "imagens/fundo.jpg",
+      "blocos": [
+        {
+          "zona": "centro",
+          "estilo": "titulo",
+          "texto": "hoje não tem\n\"deixar ganhar\""
+        },
+        {
+          "zona": "centro",
+          "estilo": "sub",
+          "texto": "(é intervenção terapêutica, tá?)"
+        },
+        {
+          "zona": "centro",
+          "estilo": "adesivos",
+          "emojis": [
+            "🃏",
+            "😤",
+            "🏆"
+          ]
+        }
+      ],
+      "stickers": []
+    }
+  ],
+  "legenda": "Coloca o capacete que hoje tem UNO 🃏\n\nQuando a criança perde no jogo e chora, emburra ou joga as cartas longe, muitos adultos correm para deixar ganhar \"pra não sofrer\".\n\nSó que o jogo é um dos lugares mais seguros do mundo para aprender a perder.\n\nPiaget já descrevia o jogo de regras como uma etapa importante do desenvolvimento: aceitar regras que valem para todos, esperar a vez, lidar com o resultado.\n\nE Winnicott falava da importância de frustrações na medida certa, vividas ao lado de um adulto que acolhe. Nem frustração demais, nem nenhuma.\n\nNa terapia, perder no jogo vira oportunidade de:\n🎯 nomear a frustração (\"que raiva perder, né?\")\n🫶 acolher sem mudar a regra\n🔁 jogar de novo, porque a vida continua\n\nE não, eu não estou sendo competitiva. Quase nunca 😌",
+  "hashtags": [
+    "#psicologiainfantil",
+    "#ludoterapia",
+    "#toleranciaafrustracao",
+    "#brincarterapeutico",
+    "#maternidade",
+    "#psicologa"
+  ]
+}

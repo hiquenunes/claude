@@ -1,0 +1,89 @@
+{
+  "id": "2026-11-story-enquete-divertida-mente",
+  "tipo": "story",
+  "status": "rascunho",
+  "tema": "Todas as emoções têm função",
+  "formato_meme": "Enquete + resposta no story seguinte",
+  "notas_producao": "Story 1: colocar o adesivo de ENQUETE (ou 'teste') na área vazia do meio, com as opções 😡 Raiva / 😢 Tristeza / 😱 Medo / 🤢 Nojinho. Story 2: publicar algumas horas depois, junto com o resultado da enquete.",
+  "imagem_sugerida": {
+    "filme": "Divertida Mente (Pixar, 2015)",
+    "cena": "As cinco emoções juntas no painel de controle",
+    "como_usar": "Opcional no story 1: salvar como imagens/emocoes.jpg e renomear \"_imagem\" para \"imagem\"."
+  },
+  "base_teorica": [
+    {
+      "conceito": "Emoções básicas e sua função adaptativa",
+      "referencia": "Ekman, P. (1992). An argument for basic emotions. Cognition and Emotion, 6(3–4), 169–200; Keltner, D., & Ekman, P. (2015, 3 jul.). The Science of 'Inside Out'. The New York Times.",
+      "como_aparece": "Os personagens do filme foram inspirados nas emoções básicas; cada uma tem uma função de proteção."
+    }
+  ],
+  "slides": [
+    {
+      "fundo": {
+        "tipo": "ceu"
+      },
+      "_imagem": "imagens/emocoes.jpg",
+      "blocos": [
+        {
+          "zona": "topo",
+          "estilo": "meme",
+          "texto": "qual emoção de\nDivertida Mente\nmanda na sua casa\nàs 19h? 😅",
+          "tamanho": 78
+        },
+        {
+          "zona": "topo",
+          "estilo": "adesivos",
+          "emojis": [
+            "😡",
+            "😢",
+            "😱",
+            "🤢"
+          ],
+          "tamanho": 110
+        },
+        {
+          "zona": "centro",
+          "estilo": "espaco",
+          "altura": 420
+        },
+        {
+          "zona": "base",
+          "estilo": "nota",
+          "texto": "(sem julgamentos, a minha também tem dias assim)",
+          "tamanho": 48
+        }
+      ],
+      "stickers": []
+    },
+    {
+      "fundo": {
+        "tipo": "cor",
+        "cor": "#B79CFF"
+      },
+      "blocos": [
+        {
+          "zona": "topo",
+          "estilo": "etiqueta",
+          "texto": "spoiler da psicóloga",
+          "fundo": "#2B2433"
+        },
+        {
+          "zona": "centro",
+          "estilo": "meme",
+          "texto": "todas são necessárias 💛",
+          "tamanho": 80
+        },
+        {
+          "zona": "centro",
+          "estilo": "texto",
+          "cartao": true,
+          "alinhar": "esquerda",
+          "texto": "😡 a **raiva** protege limites\n😱 o **medo** protege do perigo\n🤢 o **nojinho** protege do que faz mal\n😢 a **tristeza** pede colo e conexão\n\nO filme se inspirou nas pesquisas de Paul Ekman sobre emoções básicas. O objetivo nunca foi só a Alegria no controle. 😉",
+          "tamanho": 42
+        }
+      ]
+    }
+  ],
+  "legenda": "",
+  "hashtags": []
+}

@@ -1,0 +1,207 @@
+{
+  "id": "2026-11-birra-reforco-intermitente",
+  "tipo": "carrossel",
+  "status": "rascunho",
+  "tema": "Por que a birra que 'às vezes funciona' fica mais forte",
+  "formato_meme": "Capa meme + slides explicativos em papel de caderno + fechamento",
+  "imagem_sugerida": {
+    "filme": "Os Incríveis (Pixar, 2004) / curta Zezé Problema (2005)",
+    "cena": "Jack-Jack pegando fogo / virando monstrinho no colo da babá",
+    "como_usar": "Opcional, só na capa: salvar como imagens/capa.jpg e renomear \"_imagem\" para \"imagem\" no slide 1."
+  },
+  "base_teorica": [
+    {
+      "conceito": "Reforçamento intermitente",
+      "referencia": "Ferster, C. B., & Skinner, B. F. (1957). Schedules of Reinforcement. New York: Appleton-Century-Crofts.",
+      "como_aparece": "Comportamento reforçado só de vez em quando fica mais resistente à extinção (slide 2)."
+    },
+    {
+      "conceito": "Explosão de extinção",
+      "referencia": "Lerman, D. C., & Iwata, B. A. (1995). Prevalence of the extinction burst and its attenuation during treatment. Journal of Applied Behavior Analysis, 28(1), 93–94.",
+      "como_aparece": "Ao parar de ceder, o comportamento pode piorar antes de melhorar (slide 4)."
+    },
+    {
+      "conceito": "Conectar e redirecionar",
+      "referencia": "Siegel, D. J., & Bryson, T. P. (2011). O Cérebro da Criança. São Paulo: nVersos.",
+      "como_aparece": "Validar a emoção antes de sustentar o limite (slide 5)."
+    }
+  ],
+  "slides": [
+    {
+      "fundo": {
+        "tipo": "cor",
+        "cor": "#FF7E9D"
+      },
+      "_imagem": "imagens/capa.jpg",
+      "blocos": [
+        {
+          "zona": "centro",
+          "estilo": "meme",
+          "texto": "quando a birra funciona\n1 vez em cada 10…"
+        },
+        {
+          "zona": "centro",
+          "estilo": "balao",
+          "texto": "o cérebro da criança anota:\n*VALE A PENA INSISTIR* 📝",
+          "destaque": "#FF4F7B"
+        }
+      ],
+      "stickers": [
+        {
+          "emoji": "🍫",
+          "x": 14,
+          "y": 8,
+          "tamanho": 130,
+          "giro": -14
+        },
+        {
+          "emoji": "😭",
+          "x": 82,
+          "y": 84,
+          "tamanho": 170,
+          "giro": 10
+        }
+      ]
+    },
+    {
+      "fundo": {
+        "tipo": "papel"
+      },
+      "blocos": [
+        {
+          "zona": "topo",
+          "estilo": "etiqueta",
+          "texto": "o que a ciência diz"
+        },
+        {
+          "zona": "centro",
+          "estilo": "nota",
+          "texto": "a lógica da máquina caça-níquel 🎰",
+          "tamanho": 76
+        },
+        {
+          "zona": "centro",
+          "estilo": "texto",
+          "cartao": true,
+          "texto": "Quando um comportamento é recompensado *só de vez em quando* (o tal do reforçamento intermitente), ele fica **mais forte e mais difícil de sumir** do que se fosse recompensado sempre.\n\nFerster & Skinner já mostravam isso em 1957.",
+          "destaque": "#FF4F7B"
+        }
+      ]
+    },
+    {
+      "fundo": {
+        "tipo": "papel"
+      },
+      "blocos": [
+        {
+          "zona": "topo",
+          "estilo": "etiqueta",
+          "texto": "traduzindo pro mercado",
+          "fundo": "#4CC9F0"
+        },
+        {
+          "zona": "centro",
+          "estilo": "balao",
+          "texto": "\"não… não… NÃO… …tá bom, toma.\"",
+          "fundo": "#FFE07A"
+        },
+        {
+          "zona": "centro",
+          "estilo": "texto",
+          "cartao": true,
+          "texto": "Esse “tá bom” no final ensina exatamente o contrário do que a gente quer:\n\nque insistir **mais alto** e **por mais tempo** funciona. 🔊"
+        }
+      ]
+    },
+    {
+      "fundo": {
+        "tipo": "papel"
+      },
+      "blocos": [
+        {
+          "zona": "topo",
+          "estilo": "etiqueta",
+          "texto": "aviso importante",
+          "fundo": "#FFB020"
+        },
+        {
+          "zona": "centro",
+          "estilo": "nota",
+          "texto": "vai piorar antes de melhorar 😬",
+          "tamanho": 76
+        },
+        {
+          "zona": "centro",
+          "estilo": "texto",
+          "cartao": true,
+          "texto": "Quando você para de ceder, a birra pode ficar **mais intensa** por um tempo. Isso tem nome: *explosão de extinção* (Lerman & Iwata, 1995).\n\nNão é sinal de que deu errado. É a criança testando se a regra mudou mesmo.",
+          "destaque": "#FF4F7B"
+        }
+      ]
+    },
+    {
+      "fundo": {
+        "tipo": "papel"
+      },
+      "blocos": [
+        {
+          "zona": "topo",
+          "estilo": "etiqueta",
+          "texto": "o que ajuda",
+          "fundo": "#7BD389"
+        },
+        {
+          "zona": "centro",
+          "estilo": "texto",
+          "cartao": true,
+          "alinhar": "esquerda",
+          "texto": "🫶 **Conecte antes de corrigir:** “você queria muito, eu sei.”\n\n🧱 **Sustente o limite com calma**, sem sermão.\n\n🔁 **Seja previsível:** o mesmo “não” hoje e amanhã.\n\n⭐ **Elogie** quando ela lidar bem com um “não”."
+        },
+        {
+          "zona": "base",
+          "estilo": "texto",
+          "texto": "Siegel & Bryson chamam isso de *conectar e redirecionar*.",
+          "tamanho": 34,
+          "destaque": "#FF4F7B"
+        }
+      ]
+    },
+    {
+      "fundo": {
+        "tipo": "confete",
+        "cor": "#FFF1D6"
+      },
+      "blocos": [
+        {
+          "zona": "centro",
+          "estilo": "titulo",
+          "texto": "limite com afeto\nnão é frieza.",
+          "cor": "#2B2433",
+          "tamanho": 96
+        },
+        {
+          "zona": "centro",
+          "estilo": "texto",
+          "texto": "É previsibilidade. E criança se sente **segura** onde as coisas são previsíveis. 💛",
+          "tamanho": 50
+        },
+        {
+          "zona": "base",
+          "estilo": "etiqueta",
+          "texto": "salva pra lembrar no próximo mercado 🛒",
+          "tamanho": 30
+        }
+      ]
+    }
+  ],
+  "legenda": "A birra que funciona \"só às vezes\" é a mais difícil de acabar. Parece contraditório, mas é uma das descobertas mais sólidas da psicologia comportamental. 🎰\n\nFerster e Skinner (1957) mostraram que comportamentos recompensados de forma intermitente, ou seja, às vezes sim e às vezes não, ficam mais resistentes do que os recompensados sempre. É a mesma lógica que faz alguém continuar puxando a alavanca do caça-níquel.\n\nE tem mais: quando o adulto finalmente para de ceder, a birra costuma piorar antes de melhorar. A literatura chama isso de explosão de extinção. Saber disso ajuda a não desistir no pior momento.\n\nMas atenção: firmeza não é frieza. Validar o que a criança sente (\"eu sei que você queria muito\") e manter o limite podem, e devem, andar juntos.\n\nCada família é única. Se as birras estão muito intensas, frequentes ou longas para a idade, vale conversar com uma psicóloga infantil. 💛\n\nManda para alguém que vai ao mercado com criança essa semana 🛒",
+  "hashtags": [
+    "#psicologiainfantil",
+    "#birra",
+    "#limites",
+    "#disciplinapositiva",
+    "#analisedocomportamento",
+    "#maternidadereal",
+    "#paternidade"
+  ]
+}

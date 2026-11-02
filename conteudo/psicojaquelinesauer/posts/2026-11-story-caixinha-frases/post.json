@@ -1,0 +1,38 @@
+{
+  "id": "2026-11-story-caixinha-frases",
+  "tipo": "story",
+  "status": "rascunho",
+  "tema": "Autocompaixão parental",
+  "formato_meme": "Caixinha de perguntas com tom de confissão bem-humorada",
+  "notas_producao": "Colocar o adesivo de CAIXINHA DE PERGUNTAS na área vazia do meio. Responder as melhores nos dias seguintes (sem identificar ninguém), sempre com acolhimento: o objetivo é reduzir culpa, não expor.",
+  "base_teorica": [
+    {
+      "conceito": "Autocompaixão",
+      "referencia": "Neff, K. D. (2003). Self-compassion: An alternative conceptualization of a healthy attitude toward oneself. Self and Identity, 2(2), 85–101.",
+      "como_aparece": "Reconhecer a falha como experiência humana comum, sem autocrítica severa."
+    },
+    {
+      "conceito": "Mãe/pai suficientemente bom",
+      "referencia": "Winnicott, D. W. (1953). Transitional objects and transitional phenomena. International Journal of Psycho-Analysis, 34, 89–97.",
+      "como_aparece": "Não existe cuidador perfeito, e a criança não precisa de um."
+    }
+  ],
+  "slides": [
+    {
+      "fundo": { "tipo": "confete", "cor": "#FFE7EE" },
+      "blocos": [
+        { "zona": "topo", "estilo": "etiqueta", "texto": "caixinha da sinceridade 📦" },
+        { "zona": "topo", "estilo": "titulo", "texto": "qual frase você jurou que NUNCA ia falar pro seu filho…", "cor": "#2B2433", "tamanho": 88 },
+        { "zona": "topo", "estilo": "nota", "texto": "…e falou? 🙈", "tamanho": 96, "cor": "#FF4F7B" },
+        { "zona": "centro", "estilo": "espaco", "altura": 380 },
+        { "zona": "base", "estilo": "texto", "texto": "aqui é zona livre de julgamento. pais **suficientemente bons** também dizem “porque eu tô mandando” 😌", "tamanho": 36 }
+      ],
+      "stickers": [
+        { "emoji": "🤐", "x": 86, "y": 56, "tamanho": 130, "giro": 12 },
+        { "emoji": "💬", "x": 13, "y": 58, "tamanho": 120, "giro": -10 }
+      ]
+    }
+  ],
+  "legenda": "",
+  "hashtags": []
+}

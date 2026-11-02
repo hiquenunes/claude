@@ -1,0 +1,86 @@
+{
+  "id": "2026-11-raiva-nomear-para-domar",
+  "tipo": "feed",
+  "status": "rascunho",
+  "tema": "Raiva não se elimina, se regula",
+  "formato_meme": "\"Sou psicóloga infantil, mas...\" (faixas de papel)",
+  "imagem_sugerida": {
+    "filme": "Divertida Mente (Pixar, 2015)",
+    "cena": "Raiva com fogo saindo da cabeça, na sala de controle",
+    "como_usar": "Salvar como imagens/fundo.jpg e descomentar o campo \"imagem\" do slide (renomear \"_imagem\" para \"imagem\"). Sem a imagem, o post sai com o fundo ilustrado de consultório."
+  },
+  "base_teorica": [
+    {
+      "conceito": "Regulação emocional ≠ supressão",
+      "referencia": "Gross, J. J. (1998). The emerging field of emotion regulation. Review of General Psychology, 2(3), 271–299; Gross, J. J., & John, O. P. (2003). Journal of Personality and Social Psychology, 85(2), 348–362.",
+      "como_aparece": "Suprimir a emoção tem custos; regular é escolher o que fazer com ela."
+    },
+    {
+      "conceito": "Nomear para domar (rotulação do afeto)",
+      "referencia": "Lieberman, M. D. et al. (2007). Putting feelings into words. Psychological Science, 18(5), 421–428; Siegel, D. J., & Bryson, T. P. (2011). O Cérebro da Criança.",
+      "como_aparece": "Dar nome à emoção ajuda a acalmar a resposta emocional — base do 'vou ensinar o que fazer com ela'."
+    }
+  ],
+  "slides": [
+    {
+      "fundo": {
+        "tipo": "quarto"
+      },
+      "_imagem": "imagens/fundo.jpg",
+      "blocos": [
+        {
+          "zona": "centro",
+          "estilo": "faixa",
+          "texto": "Sou psicóloga infantil",
+          "giro": -1.5
+        },
+        {
+          "zona": "centro",
+          "estilo": "faixa",
+          "texto": "mas não vou ensinar seu filho",
+          "giro": 1
+        },
+        {
+          "zona": "centro",
+          "estilo": "faixa",
+          "texto": "a não sentir raiva",
+          "tamanho": 74,
+          "giro": -1
+        },
+        {
+          "zona": "base",
+          "estilo": "faixa",
+          "texto": "(vou ensinar o que fazer com ela)",
+          "tamanho": 46,
+          "fundo": "#FFE07A"
+        }
+      ],
+      "stickers": [
+        {
+          "emoji": "😡",
+          "x": 85,
+          "y": 8,
+          "tamanho": 140,
+          "giro": 12
+        },
+        {
+          "emoji": "🧸",
+          "x": 14,
+          "y": 8,
+          "tamanho": 140,
+          "giro": -10
+        }
+      ],
+      "escala_max": 1.15
+    }
+  ],
+  "legenda": "Raiva não é defeito de fábrica 😅 É uma emoção que avisa: \"algo aqui parece injusto, ou alguém passou do meu limite\".\n\nO objetivo da terapia não é ter uma criança que nunca sente raiva. É ter uma criança que sabe o que fazer quando ela aparece.\n\nA pesquisa em regulação emocional (Gross, 1998) mostra que engolir a emoção, o famoso \"engole o choro\", tem custo: a emoção continua lá dentro, só que sem nome e sem caminho.\n\nJá colocar em palavras ajuda. Um estudo de Lieberman e colegas (2007) mostrou que nomear o que se sente diminui a ativação da amígdala, a área do cérebro ligada ao alarme. É o que Siegel e Bryson chamam de \"nomear para domar\".\n\nNa prática, em casa:\n💬 \"Você ficou com muita raiva porque o irmão pegou seu brinquedo.\"\n🛑 \"Pode ficar bravo. Não pode bater.\"\n🫁 \"Vamos assoprar a vela juntos?\"\n\nPrimeiro a gente nomeia. Depois a gente ensina o caminho.\n\nSalva para lembrar na próxima explosão 🌋",
+  "hashtags": [
+    "#psicologiainfantil",
+    "#regulacaoemocional",
+    "#maternidadereal",
+    "#parentalidade",
+    "#divertidamente",
+    "#psicologa"
+  ]
+}

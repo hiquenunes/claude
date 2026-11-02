@@ -7,4 +7,4 @@ Segundo cérebro do Henrique. Sem código, sem servidor, sem credencial para con
 
 A pasta "Jarvis" já existe no Drive, com um documento "Como isso funciona" na raiz explicando a convenção — qualquer conversa do Claude com o Drive conectado pode operar a partir dali, mesmo sem ter lido este repositório.
 
-Este repositório existe só como registro/documentação da arquitetura — não há nada para instalar, buildar ou rodar aqui.
+Além da documentação da Jarvis, o repositório guarda o **agente de posts de Instagram** em [`conteudo/`](conteudo/README.md) (skill `/posts-psicojaquelinesauer`), que gera as artes localmente com o Chromium já disponível no ambiente.
