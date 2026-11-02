@@ -15,16 +15,16 @@
   --accent:#0095f6; --accent-fg:#ffffff; --danger:#ed4956; --ok:#5b7a3d;
   --sel:#e8f3fe;
   --ui:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  --s-rascunho:#b97c66; --s-aprovado:#6f7656; --s-publicado:#7e95a1;
+  --s-sugestao:#d6b26e; --s-rascunho:#b97c66; --s-aprovado:#6f7656; --s-publicado:#7e95a1;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#000000; --fg:#f5f5f5; --muted:#a8a8a8; --line:#2f2f2f; --soft:#1a1a1a; --card:#121212;
   --accent:#0095f6; --accent-fg:#ffffff; --danger:#ff6370; --ok:#a9ac8d; --sel:#0d2a40;
-  --s-rascunho:#ddc0ab; --s-aprovado:#a9ac8d; --s-publicado:#c6ced2; color-scheme:dark}}
+  --s-sugestao:#d6b26e; --s-rascunho:#ddc0ab; --s-aprovado:#a9ac8d; --s-publicado:#c6ced2; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#000000; --fg:#f5f5f5; --muted:#a8a8a8; --line:#2f2f2f; --soft:#1a1a1a; --card:#121212;
   --accent:#0095f6; --accent-fg:#ffffff; --danger:#ff6370; --ok:#a9ac8d; --sel:#0d2a40;
-  --s-rascunho:#ddc0ab; --s-aprovado:#a9ac8d; --s-publicado:#c6ced2; color-scheme:dark}
+  --s-sugestao:#d6b26e; --s-rascunho:#ddc0ab; --s-aprovado:#a9ac8d; --s-publicado:#c6ced2; color-scheme:dark}
 html,body{height:100%}
 body{background:var(--bg);color:var(--fg);font-family:var(--ui);font-size:14px;line-height:1.4}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
@@ -269,7 +269,11 @@ const FUNDOS_LISTA = [
 ];
 const EMOJIS = "🧸 🎲 🃏 🏆 🎨 🖍️ ✏️ 📚 🎒 🧠 💛 🫶 👀 😤 😡 😢 😱 🤢 😄 🥹 😅 🙈 😴 🤐 💬 📺 📱 🛒 🍫 🍭 🎈 🔊 🎧 🌀 🎸 🌈 ☁️ ⭐ ✨ 🔥 💥 🐢 🐰 🦖 🚂 🪁 🍼 ⏰ 🌙 💤 🥦 🚿 🦷 🎃 🎄 🎂 ♾️ 📝 🧘 🌋 🛑".split(" ");
 const CANTOS = {se:[13,8,"Superior esquerdo"],sd:[87,8,"Superior direito"],ie:[13,92,"Inferior esquerdo"],id:[87,92,"Inferior direito"]};
-const STATUS = {rascunho:"Rascunho",aprovado:"Aprovado",publicado:"Publicado"};
+const STATUS = {sugestao:"Sugestão do Claude",rascunho:"Rascunho",aprovado:"Aprovado",publicado:"Publicado"};
+const STATUS_CURTO = {sugestao:"Sugestão",rascunho:"Rascunho",aprovado:"Aprovado",publicado:"Publicado"};
+/* pasta do Google Drive com as fotos para fundo */
+const DRIVE_PASTA = "1nIY5FRi7s0l9qVtKvIFYTFsfZyKcg0Qm";
+const DRIVE_SERVIDOR = "Google Drive";
 
 /* ================= utilidades ================= */
 const $ = (s, el=document) => el.querySelector(s);
@@ -376,7 +380,7 @@ fontesProntas.then(()=>document.querySelectorAll(".art").forEach(ajustar));
 
 /* ================= dados ================= */
 const posts=new Map();
-let db=null, assets=null, downloads=null, sample=null, user=null;
+let db=null, assets=null, downloads=null, sample=null, user=null, mcp=null;
 const estado={carregando:true,erro:"",semDb:false,view:"perfil",aba:"feed",filtro:"todos",postId:null,slide:0,ver:"feed",confirmarExcluir:false,mostrarMais:false,editor:null,modal:null};
 
 function ordenados(){return[...posts.values()].sort((a,b)=>String(b.criado_em||b.id).localeCompare(String(a.criado_em||a.id)));}
@@ -420,7 +424,7 @@ function renderPerfil(){
   const cab=document.createElement("section");cab.className="perfil";
   cab.innerHTML=`<div class="avatar"><span>JS</span></div>
     <div><div class="nome">${esc(MARCA.perfil)}</div>
-    <div class="nums"><span><b>${feed.length}</b> publicações</span><span><b>${stories.length}</b> stories</span><span><b>${lista.filter(p=>(p.status||"rascunho")==="rascunho").length}</b> rascunhos</span></div></div>
+    <div class="nums"><span><b>${feed.length}</b> publicações</span><span><b>${stories.length}</b> stories</span><span><b>${lista.filter(p=>p.status==="sugestao").length}</b> sugestões</span></div></div>
     <div class="bio"><strong>${esc(MARCA.nome)}</strong>${esc(MARCA.bio)}<div class="ed">Conteúdo educativo · Entrelaços Espaço Terapêutico</div></div>`;
   app.appendChild(cab);
 
@@ -443,7 +447,7 @@ function renderPerfil(){
   $("#ab-st",abas).onclick=()=>{estado.aba="stories";render();};
 
   const fil=document.createElement("div");fil.className="filtros";
-  for(const [k,n] of [["todos","Todos"],["rascunho","Rascunhos"],["aprovado","Aprovados"],["publicado","Publicados"]]){
+  for(const [k,n] of [["todos","Todos"],["sugestao","Sugestões"],["rascunho","Rascunhos"],["aprovado","Aprovados"],["publicado","Publicados"]]){
     const c=document.createElement("button");c.className="chip";c.textContent=n;c.setAttribute("aria-pressed",estado.filtro===k);
     c.onclick=()=>{estado.filtro=k;render();};fil.appendChild(c);
   }
@@ -467,7 +471,7 @@ function renderPerfil(){
     const fmt=p.tipo==="story"?"stories":"feed";
     c.appendChild(moldura(p,p.slides[0],fmt,0,p.slides.length));
     if(p.tipo==="carrossel")c.insertAdjacentHTML("beforeend",`<span class="marca">${SVG_IC.carrossel.replace("<svg","<svg fill='#fff'")}</span>`);
-    const s=p.status||"rascunho";c.insertAdjacentHTML("beforeend",`<span class="status" style="--cor-s:var(--s-${s})">${STATUS[s]}</span>`);
+    const s=p.status||"rascunho";c.insertAdjacentHTML("beforeend",`<span class="status" style="--cor-s:var(--s-${s})">${STATUS_CURTO[s]||s}</span>`);
     c.onclick=()=>abrirPost(p.id);g.appendChild(c);
   }
   app.appendChild(g);
@@ -514,6 +518,12 @@ function renderPost(){
   const teo=document.createElement("div");teo.className="teoria";
   teo.innerHTML=`<h3>Base teórica</h3>`+((p.base_teorica||[]).length?p.base_teorica.map(t=>`<div><p><b>${esc(t.conceito)}</b>${t.como_aparece?` · ${esc(t.como_aparece)}`:""}</p><p class="ref">${esc(t.referencia)}</p></div>`).join(""):`<p class="aviso">Este post ainda não tem base teórica. Todo post precisa de uma: adicione na aba Teoria do editor.</p>`);
   painel.appendChild(teo);
+  if(p.sugestao&&p.sugestao.motivo)painel.insertAdjacentHTML("beforeend",`<div class="sugestao"><b>Por que este tema agora:</b> ${esc(p.sugestao.motivo)}${p.status==="sugestao"?`<br><span class="dica">Edite o que quiser e mude o status para Aprovado quando estiver pronto.</span>`:""}</div>`);
+  const pend=p.slides.filter(sl=>sl.imagem_drive&&!sl.imagem_asset);
+  if(pend.length){const d=el(`<div class="sugestao"><b>Foto do Drive escolhida:</b> ${esc(pend.map(sl=>sl.imagem_drive.nome||"foto").join(", "))}<br><span class="dica">Enquanto a foto não é importada, a arte mostra o fundo ilustrado.</span><div class="linha" style="margin-top:8px"><button class="btn pri">Importar foto${pend.length>1?"s":""} do Drive</button></div></div>`);
+    const b=d.querySelector("button");if(!mcp||!assets){b.disabled=true;d.insertAdjacentHTML("beforeend",`<p class="dica">Para importar, abra com acesso de edição e com o Google Drive conectado ao seu claude.ai.</p>`);}
+    b.onclick=async()=>{b.disabled=true;b.textContent="Importando…";const np=clone(p);let falhou=0;for(const sl of np.slides){if(sl.imagem_drive&&!sl.imagem_asset){try{sl.imagem_asset=await importarDoDrive(sl.imagem_drive.id);if(sl.escurecer===undefined)sl.escurecer=.3;}catch(e){falhou++;}}}posts.set(np.id,np);await salvarPost(np);renderPost();if(falhou)alertar(mensagemDrive(lastDriveErr));};
+    painel.appendChild(d);}
   if(p.imagem_sugerida&&p.imagem_sugerida.filme)painel.insertAdjacentHTML("beforeend",`<div class="sugestao"><b>Cena sugerida:</b> ${esc(p.imagem_sugerida.filme)}: ${esc(p.imagem_sugerida.cena||"")}<br><span class="dica">Envie a imagem no editor, aba Fundo.</span></div>`);
   if(p.notas_producao)painel.insertAdjacentHTML("beforeend",`<div class="sugestao"><b>Na hora de postar:</b> ${esc(p.notas_producao)}</div>`);
   const ac=document.createElement("div");ac.className="linha";
@@ -693,6 +703,7 @@ function abaFundo(a){
   const img=el(`<div class="bloco"><strong>Imagem de fundo (cena de filme, meme ou foto)</strong></div>`);
   const sug=ed.rascunho.imagem_sugerida;
   if(sug&&sug.filme)img.appendChild(el(`<p class="dica">Sugestão: ${esc(sug.filme)}: ${esc(sug.cena||"")}</p>`));
+  if(s.imagem_drive&&!s.imagem_asset)img.appendChild(el(`<p class="aviso">Foto do Drive escolhida: ${esc(s.imagem_drive.nome||"")}. Importe pela tela do post (botão “Importar foto do Drive”).</p>`));
   if(!assets){img.appendChild(el(`<p class="aviso">Enviar imagens fica disponível para quem tem acesso de edição a este estúdio.</p>`));}
   else{
     const inp=el(`<input type="file" accept="image/png,image/jpeg,image/webp,image/gif" id="up-img" hidden>`);
@@ -702,6 +713,7 @@ function abaFundo(a){
       try{const r=await assets.upload(f,f.type?undefined:{type:"image/jpeg"});s.imagem_asset=r.id;if(s.escurecer===undefined)s.escurecer=.3;mudou(true);}
       catch(e){btn.disabled=false;btn.textContent="Enviar imagem";img.appendChild(el(`<p class="aviso">${e&&e.code==="too_large"?"Imagem grande demais (máximo 20 MB).":e&&e.code==="unsupported_type"?"Formato não aceito. Use PNG, JPG ou WEBP.":"Não consegui enviar a imagem. Tente de novo."}</p>`));}};
     const linha=el(`<div class="linha"></div>`);linha.append(btn,inp);
+    if(mcp){const bd=el(`<button class="btn">Fotos do Drive</button>`);bd.onclick=()=>abrirDrive(s);linha.appendChild(bd);}
     if(s.imagem_asset){const rm=el(`<button class="btn perigo">Remover imagem</button>`);rm.onclick=()=>{delete s.imagem_asset;delete s.escurecer;delete s.imagem_posicao;mudou(true);};linha.appendChild(rm);}
     img.appendChild(linha);
     img.appendChild(el(`<p class="dica">Imagens de filmes e memes têm direito autoral. O uso fica a critério da Jaqueline.</p>`));
@@ -847,6 +859,42 @@ async function pedirClaude(){
   c.carregando=false;if(estado.editor&&estado.editor.claude===c)renderControles();
 }
 
+/* ================= Google Drive ================= */
+let lastDriveErr=null;
+function mensagemDrive(e){
+  const c=e&&e.code;
+  if(c==="server_not_connected"||c==="not_in_manifest")return"O Google Drive não está conectado ao seu claude.ai. Conecte em Configurações → Conectores e tente de novo.";
+  if(c==="consent_required"||c==="not_granted"||c==="approval_required")return"É preciso permitir o acesso ao Google Drive nesta página.";
+  if(c==="tool_error")return"O Drive não entregou o arquivo. Confira se a pasta foi compartilhada com você.";
+  return"Não consegui falar com o Google Drive agora. Tente de novo em instantes.";
+}
+/* acha o conteúdo base64 na resposta do conector, seja qual for o formato */
+function extrairBase64(res){
+  const blocos=(res&&res.content)||[];
+  for(const b of blocos){if(b.type==="image"&&b.data)return{b64:b.data,tipo:b.mimeType};if(b.type==="resource"&&b.resource&&b.resource.blob)return{b64:b.resource.blob,tipo:b.resource.mimeType};}
+  const vistos=new Set();
+  const busca=(v,tipo)=>{if(!v||vistos.has(v))return null;if(typeof v==="string"){const t=v.replace(/^data:([^;]+);base64,/,(m,mt)=>{tipo=mt;return"";});return t.length>200&&/^[A-Za-z0-9+/=\s]+$/.test(t.slice(0,400))?{b64:t,tipo}:null;}if(typeof v==="object"){vistos.add(v);const tp=v.mimeType||v.contentMimeType||v.mime_type||tipo;for(const k of ["content","data","base64Content","base64","blob","bytes"])if(k in v){const r=busca(v[k],tp);if(r)return r;}for(const k in v){const r=busca(v[k],tp);if(r)return r;}}return null;};
+  return busca(res&&res.payload,null)||busca(res&&res.structuredContent,null)||(blocos[0]&&blocos[0].type==="text"?busca(blocos[0].text,null):null);
+}
+async function importarDoDrive(id){
+  try{
+    const res=await mcp.callTool(DRIVE_SERVIDOR,"download_file_content",{fileId:id});
+    const r=extrairBase64(res);if(!r)throw{code:"formato"};
+    const bin=atob(r.b64.replace(/\s/g,""));const u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);
+    let tipo=r.tipo&&/^image\/(png|jpeg|webp|gif)$/.test(r.tipo)?r.tipo:(u[0]===0x89?"image/png":u[0]===0xFF?"image/jpeg":"image/webp");
+    const up=await assets.upload(new Blob([u],{type:tipo}),{type:tipo});
+    return up.id;
+  }catch(e){lastDriveErr=e;throw e;}
+}
+async function listarDrive(){
+  const res=await mcp.callTool(DRIVE_SERVIDOR,"search_files",{query:`parentId = '${DRIVE_PASTA}' and mimeType contains 'image/'`,excludeContentSnippets:true,pageSize:100});
+  const p=res&&res.payload;const lista=Array.isArray(p)?p:(p&&(p.files||p.items||p.results))||[];
+  return lista.filter(f=>f&&f.id).map(f=>({id:f.id,nome:f.title||f.name||"foto"}));
+}
+function abrirDrive(slide){estado.modal={tipo:"drive",slide,status:"Carregando fotos da pasta…",fotos:null};renderModal();
+  listarDrive().then(f=>{if(!estado.modal||estado.modal.tipo!=="drive")return;estado.modal.fotos=f;estado.modal.status=f.length?"Escolha uma foto:":"A pasta está vazia. Coloque fotos nela no Google Drive.";renderModal();})
+  .catch(e=>{if(!estado.modal||estado.modal.tipo!=="drive")return;estado.modal.status=mensagemDrive(e);estado.modal.fotos=[];renderModal();});}
+
 /* ================= exportar ================= */
 async function gerarPNG(post,slide,fmt,i,total){
   const palco=$("#palco");palco.innerHTML="";
@@ -914,6 +962,14 @@ function renderModal(){
     if(m.arquivos){const s=el(`<button class="btn pri">${m.arquivos.length>1?"Baixar tudo (.zip)":"Baixar PNG"}</button>`);s.onclick=salvarArquivos;l.appendChild(s);}
     const f=el(`<button class="btn">Fechar</button>`);f.onclick=()=>{(m.imgs||[]).forEach(i=>URL.revokeObjectURL(i.url));estado.modal=null;renderModal();};l.appendChild(f);
     cx.appendChild(l);
+  }else if(m.tipo==="drive"){
+    cx.innerHTML=`<h3>Fotos do Drive</h3><p class="dica">Pasta “Estúdio Jaqueline — Fotos para posts”</p><p>${esc(m.status)}</p><div class="tipos" id="lista-drive"></div><button class="btn">Fechar</button>`;
+    const l=cx.querySelector("#lista-drive");
+    for(const f of m.fotos||[]){const b=el(`<button><span class="ico">🖼️</span><span><b>${esc(f.nome)}</b><small>Usar como fundo deste slide</small></span></button>`);
+      b.onclick=async()=>{m.status=`Importando ${f.nome}…`;m.fotos=[];renderModal();
+        try{const id=await importarDoDrive(f.id);const sl=m.slide;sl.imagem_asset=id;sl.imagem_drive={id:f.id,nome:f.nome};if(sl.escurecer===undefined)sl.escurecer=.3;estado.modal=null;renderModal();if(estado.editor){mudou(true);}}
+        catch(e){m.status=mensagemDrive(e);renderModal();}};l.appendChild(b);}
+    cx.querySelector(".btn").onclick=()=>{estado.modal=null;renderModal();};
   }else if(m.tipo==="copiar"){
     cx.innerHTML=`<h3>Copiar legenda</h3><p class="dica">Selecione o texto e copie.</p><textarea rows="10" id="copiar-txt" readonly>${esc(m.texto)}</textarea><button class="btn">Fechar</button>`;
     cx.querySelector(".btn").onclick=()=>{estado.modal=null;renderModal();};
@@ -927,7 +983,7 @@ matchMedia("(min-width:900px)").addEventListener("change",()=>{const c=$(".edito
 render();
 (async()=>{
   const use=window.claude&&window.claude.use?(n)=>window.claude.use(n).catch(()=>null):async()=>null;
-  [db,assets,downloads,sample,user]=await Promise.all(["db","assets","downloads","sample","user"].map(use));
+  [db,assets,downloads,sample,user,mcp]=await Promise.all(["db","assets","downloads","sample","user","mcp"].map(use));
   if(!db){estado.carregando=false;estado.semDb=true;render();return;}
   const limite=setTimeout(()=>{if(estado.carregando){estado.carregando=false;estado.erro="O banco demorou a responder. Confira a internet e recarregue.";render();}},10000);
   db.collection("posts").onSnapshot((snap)=>{
