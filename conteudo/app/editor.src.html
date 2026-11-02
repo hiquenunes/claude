@@ -172,6 +172,11 @@ input[type=range]{width:100%;accent-color:var(--accent)}
 .tipos .ico{font-size:26px;text-align:center}
 .tipos b{display:block;font-size:15px}
 .tipos small{color:var(--muted)}
+.galeria{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px}
+.galeria button{position:relative;aspect-ratio:4/5;border-radius:8px;overflow:hidden;background:var(--soft);outline:2px solid transparent}
+.galeria button[aria-pressed="true"]{outline-color:var(--accent);outline-offset:2px}
+.galeria img{width:100%;height:100%;object-fit:cover;display:block}
+.galeria small{position:absolute;left:0;right:0;bottom:0;background:rgba(0,0,0,.55);color:#fff;font-size:10px;padding:2px 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .export-img{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
 .export-img img{width:100%;border-radius:6px}
 @media (min-width:900px){
@@ -306,8 +311,21 @@ const FUNDOS = {
 };
 
 /* ================= motor da arte ================= */
-function blocoHTML(b){
+const FONTE_PADRAO="Montserrat";
+const PESO_PADRAO={faixa:500,meme:800,amarelo:800,titulo:900,sub:700,nota:600,texto:500,balao:600,etiqueta:800};
+const FONTES_LISTA=[["Montserrat","Montserrat"],["Fredoka","Fredoka"],["Nunito","Nunito"],["Baloo 2","Baloo"],["Caveat","Caveat (manuscrita)"],["Special Elite","Máquina de escrever"],["original","Original de cada estilo"]];
+const PESOS=[[300,"Fina"],[400,"Regular"],[600,"Semibold"],[700,"Bold"],[900,"Black"]];
+const EMOJI_FF="'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif";
+function familiaDe(b,post){return b.fonte||(post&&post.fonte)||FONTE_PADRAO;}
+function estiloFonte(b,post){
+  if(["adesivos","espaco"].includes(b.estilo))return"";
+  const fam=familiaDe(b,post);
+  if(fam==="original")return b.peso?`font-weight:${b.peso}`:"";
+  return`font-family:'${fam}',${EMOJI_FF};font-weight:${b.peso||PESO_PADRAO[b.estilo]||600}`;
+}
+function blocoHTML(b,post){
   const v=[];
+  const ef=estiloFonte(b,post);if(ef)v.push(ef);
   if(b.tamanho)v.push(`--t:${b.tamanho}px`);
   if(b.cor)v.push(`--cor:${cor(b.cor)}`);
   if(b.fundo)v.push(`--fundo:${cor(b.fundo)}`);
@@ -337,7 +355,7 @@ function criarArte(post,slideOrig,fmt,i,total){
   const e=slide.escurecer??(temImg?.3:0);
   const veu=e?`<div class="veu" style="background:linear-gradient(rgba(0,0,0,${e}),rgba(0,0,0,${e*.4}) 45%,rgba(0,0,0,${e}))"></div>`:"";
   const z={topo:[],centro:[],base:[]};
-  for(const b of slide.blocos||[])(z[b.zona]||z.centro).push(blocoHTML(b));
+  for(const b of slide.blocos||[])(z[b.zona]||z.centro).push(blocoHTML(b,post));
   const st=(slide.stickers||[]).map(s=>{const y=fmt==="stories"?(safe.t+(s.y/100)*(h-safe.t-safe.b))/h*100:s.y;return`<div class="sticker" style="left:${s.x}%;top:${y}%;font-size:${s.tamanho||150}px;--g:${s.giro||0}deg">${esc(s.emoji)}</div>`;}).join("");
   const escuro=["explosao","lousa","cor","madeira"].includes(f.tipo)||temImg;
   const corA=slide.cor_assinatura||(escuro?"rgba(255,255,255,.85)":"rgba(30,28,26,.6)");
@@ -368,7 +386,7 @@ function moldura(post,slide,fmt,i,total,extra=""){
   requestAnimationFrame(()=>{m.style.setProperty("--s",m.clientWidth/1080);ajustar(a);});
   return m;
 }
-let fontesProntas=Promise.all(["700 20px Fredoka","600 20px Fredoka","600 20px Nunito","800 20px Nunito","italic 800 20px Nunito","800 20px 'Baloo 2'","700 20px Caveat","400 20px 'Special Elite'"].map(f=>document.fonts.load(f).catch(()=>{}))).then(()=>document.fonts.ready);
+let fontesProntas=Promise.all(["700 20px Fredoka","600 20px Fredoka","600 20px Nunito","800 20px Nunito","italic 800 20px Nunito","800 20px 'Baloo 2'","700 20px Caveat","400 20px 'Special Elite'","300 20px Montserrat","400 20px Montserrat","500 20px Montserrat","600 20px Montserrat","700 20px Montserrat","800 20px Montserrat","900 20px Montserrat","italic 700 20px Montserrat"].map(f=>document.fonts.load(f).catch(()=>{}))).then(()=>document.fonts.ready);
 fontesProntas.then(()=>document.querySelectorAll(".art").forEach(ajustar));
 
 /* ================= dados ================= */
@@ -512,6 +530,8 @@ function renderPost(){
   teo.innerHTML=`<h3>Base teórica</h3>`+((p.base_teorica||[]).length?p.base_teorica.map(t=>`<div><p><b>${esc(t.conceito)}</b>${t.como_aparece?` · ${esc(t.como_aparece)}`:""}</p><p class="ref">${esc(t.referencia)}</p></div>`).join(""):`<p class="aviso">Este post ainda não tem base teórica. Todo post precisa de uma: adicione na aba Teoria do editor.</p>`);
   painel.appendChild(teo);
   if(p.sugestao&&p.sugestao.motivo)painel.insertAdjacentHTML("beforeend",`<div class="sugestao"><b>Por que este tema agora:</b> ${esc(p.sugestao.motivo)}${p.status==="sugestao"?`<br><span class="dica">Edite o que quiser e mude o status para Aprovado quando estiver pronto.</span>`:""}</div>`);
+  const creds=[...new Set(p.slides.filter(sl=>sl.imagem_asset&&sl.imagem_credito).map(sl=>sl.imagem_credito))];
+  if(creds.length)painel.insertAdjacentHTML("beforeend",`<div class="sugestao"><b>Crédito das fotos:</b> ${esc(creds.join(" · "))}<br><span class="dica">Não é obrigatório nesses bancos, mas é gentil citar no fim da legenda.</span></div>`);
   const pend=p.slides.filter(sl=>sl.imagem_drive&&!sl.imagem_asset);
   if(pend.length){const d=el(`<div class="sugestao"><b>Foto do Drive escolhida:</b> ${esc(pend.map(sl=>sl.imagem_drive.nome||"foto").join(", "))}<br><span class="dica">Enquanto a foto não é importada, a arte mostra o fundo ilustrado.</span><div class="linha" style="margin-top:8px"><button class="btn pri">Importar foto${pend.length>1?"s":""} do Drive</button></div></div>`);
     const b=d.querySelector("button");if(!mcp||!assets){b.disabled=true;d.insertAdjacentHTML("beforeend",`<p class="dica">Para importar, abra com acesso de edição e com o Google Drive conectado ao seu claude.ai.</p>`);}
@@ -609,13 +629,13 @@ function atualizarVisual(){
     if(p.tipo==="carrossel"&&p.slides.length<2)v.insertAdjacentHTML("beforeend",`<p class="dica">Carrossel precisa de pelo menos 2 slides.</p>`);
   }
 }
-const TABS=[["texto","Texto"],["fundo","Fundo"],["adesivos","Adesivos"],["legenda","Legenda"],["teoria","Teoria"],["info","Detalhes"],["claude","✨ Pedir ao Claude"]];
+const TABS=[["texto","Texto"],["fontes","Fontes"],["fundo","Fundo"],["adesivos","Adesivos"],["legenda","Legenda"],["teoria","Teoria"],["info","Detalhes"],["claude","✨ Pedir ao Claude"]];
 function renderControles(){
   const ed=estado.editor,tabs=$("#tabs");if(!tabs)return;
   tabs.innerHTML="";
   for(const [k,n] of TABS){if(k==="claude"&&!sample)continue;const b=document.createElement("button");b.setAttribute("role","tab");b.textContent=n;b.setAttribute("aria-selected",ed.tab===k);b.onclick=()=>{ed.tab=k;renderControles();};tabs.appendChild(b);}
   const a=$("#aba");a.innerHTML="";
-  ({texto:abaTexto,fundo:abaFundo,adesivos:abaAdesivos,legenda:abaLegenda,teoria:abaTeoria,info:abaInfo,claude:abaClaude})[ed.tab](a);
+  ({texto:abaTexto,fontes:abaFontes,fundo:abaFundo,adesivos:abaAdesivos,legenda:abaLegenda,teoria:abaTeoria,info:abaInfo,claude:abaClaude})[ed.tab](a);
 }
 function el(html){const t=document.createElement("template");t.innerHTML=html.trim();return t.content.firstElementChild;}
 function seletorCor(atual,aoMudar,{padrao="Padrão"}={}){
@@ -685,6 +705,38 @@ function abaTexto(a){
   a.appendChild(add);
 }
 
+function abaFontes(a){
+  const ed=estado.editor,p=ed.rascunho,s=slideAtual();
+  const famPost=p.fonte||FONTE_PADRAO;
+  const geral=el(`<div class="bloco"><strong>Fonte do post inteiro</strong><div class="opcoes"></div><p class="dica">Vale para todos os slides. Montserrat é a fonte padrão do perfil.</p></div>`);
+  for(const [f,n] of FONTES_LISTA){const b=el(`<button aria-pressed="${famPost===f}" style="${f!=="original"?`font-family:'${f}',sans-serif`:""}">${esc(n)}</button>`);b.onclick=()=>{p.fonte=f===FONTE_PADRAO?undefined:f;mudou(true);};geral.querySelector(".opcoes").appendChild(b);}
+  a.appendChild(geral);
+  const textos=(s.blocos||[]).filter(b=>!["adesivos","espaco"].includes(b.estilo));
+  if(!textos.length){a.appendChild(el(`<p class="dica">Este slide não tem textos.</p>`));return;}
+  if(famPost==="Montserrat"){
+    const todos=el(`<div class="bloco"><strong>Peso de todos os textos deste slide</strong><div class="opcoes"></div></div>`);
+    const pesos=new Set(textos.map(b=>b.peso||0));const unico=pesos.size===1?[...pesos][0]:null;
+    const o=todos.querySelector(".opcoes");
+    const pad=el(`<button aria-pressed="${unico===0}">Padrão de cada estilo</button>`);pad.onclick=()=>{textos.forEach(b=>delete b.peso);mudou(true);};o.appendChild(pad);
+    for(const [w,n] of PESOS){const b=el(`<button aria-pressed="${unico===w}" style="font-family:Montserrat,sans-serif;font-weight:${w}">${n}</button>`);b.onclick=()=>{textos.forEach(t=>{t.peso=w;});mudou(true);};o.appendChild(b);}
+    a.appendChild(todos);
+  }
+  textos.forEach((b)=>{
+    const nome=(ESTILOS.find(e=>e[0]===b.estilo)||["","Texto"])[1];
+    const fam=familiaDe(b,p);
+    const c=el(`<div class="bloco"><strong>${esc(nome)}: ${esc((b.texto||"").split("\n")[0].slice(0,36))}</strong><label class="campo">Fonte deste texto<select><option value="">Igual ao post</option>${FONTES_LISTA.map(([f,n])=>`<option value="${esc(f)}" ${b.fonte===f?"selected":""}>${esc(n)}</option>`).join("")}</select></label></div>`);
+    c.querySelector("select").onchange=(e)=>{b.fonte=e.target.value||undefined;mudou(true);};
+    if(fam==="Montserrat"||fam==="Nunito"){
+      const o=el(`<div class="opcoes"></div>`);
+      const atual=b.peso||0;
+      const pd=el(`<button aria-pressed="${!atual}">Padrão</button>`);pd.onclick=()=>{delete b.peso;mudou(true);};o.appendChild(pd);
+      for(const [w,n] of PESOS){const bt=el(`<button aria-pressed="${atual===w}" style="font-family:'${fam}',sans-serif;font-weight:${w}">${n}</button>`);bt.onclick=()=>{b.peso=w;mudou(true);};o.appendChild(bt);}
+      c.appendChild(o);
+    }else c.appendChild(el(`<p class="dica">Esta fonte tem um peso só.</p>`));
+    a.appendChild(c);
+  });
+}
+
 function abaFundo(a){
   const ed=estado.editor,s=slideAtual();s.fundo=s.fundo||{tipo:"confete"};
   const tipos=el(`<div class="bloco"><strong>Fundo ilustrado</strong><div class="opcoes"></div></div>`);
@@ -696,6 +748,14 @@ function abaFundo(a){
   const img=el(`<div class="bloco"><strong>Imagem de fundo (cena de filme, meme ou foto)</strong></div>`);
   const sug=ed.rascunho.imagem_sugerida;
   if(sug&&sug.filme)img.appendChild(el(`<p class="dica">Sugestão: ${esc(sug.filme)}: ${esc(sug.cena||"")}</p>`));
+  const alts=s.alternativas||[];
+  if(alts.length){
+    const g=el(`<div style="display:grid;gap:6px"><span class="dica">Fotos sugeridas para este slide (bancos de imagem gratuitos):</span><div class="galeria"></div></div>`);
+    for(const al of alts){const b=el(`<button aria-pressed="${s.imagem_asset===al.asset}" aria-label="Usar foto de ${esc(al.credito||"")}"><img alt="" src="/_blob/${esc(al.asset)}" loading="lazy"><small>${esc(al.credito||"")}</small></button>`);
+      b.onclick=()=>{s.imagem_asset=al.asset;s.imagem_credito=al.credito;delete s.imagem_drive;if(s.escurecer===undefined)s.escurecer=.3;mudou(true);};g.querySelector(".galeria").appendChild(b);}
+    img.appendChild(g);
+  }
+  if(s.imagem_asset&&s.imagem_credito)img.appendChild(el(`<p class="dica">Crédito da foto: ${esc(s.imagem_credito)}. Os bancos usados não exigem crédito, mas citar é gentil.</p>`));
   if(s.imagem_drive&&!s.imagem_asset)img.appendChild(el(`<p class="aviso">Foto do Drive escolhida: ${esc(s.imagem_drive.nome||"")}. Importe pela tela do post (botão “Importar foto do Drive”).</p>`));
   if(!assets){img.appendChild(el(`<p class="aviso">Enviar imagens fica disponível para quem tem acesso de edição a este estúdio.</p>`));}
   else{
@@ -703,11 +763,12 @@ function abaFundo(a){
     const btn=el(`<button class="btn">${s.imagem_asset?"Trocar imagem":"Enviar imagem"}</button>`);
     btn.onclick=()=>inp.click();
     inp.onchange=async()=>{const f=inp.files[0];if(!f)return;btn.textContent="Enviando…";btn.disabled=true;
-      try{const r=await assets.upload(f,f.type?undefined:{type:"image/jpeg"});s.imagem_asset=r.id;if(s.escurecer===undefined)s.escurecer=.3;mudou(true);}
+      try{const r=await assets.upload(f,f.type?undefined:{type:"image/jpeg"});s.imagem_asset=r.id;delete s.imagem_credito;delete s.imagem_drive;if(s.escurecer===undefined)s.escurecer=.3;mudou(true);}
       catch(e){btn.disabled=false;btn.textContent="Enviar imagem";img.appendChild(el(`<p class="aviso">${e&&e.code==="too_large"?"Imagem grande demais (máximo 20 MB).":e&&e.code==="unsupported_type"?"Formato não aceito. Use PNG, JPG ou WEBP.":"Não consegui enviar a imagem. Tente de novo."}</p>`));}};
     const linha=el(`<div class="linha"></div>`);linha.append(btn,inp);
     if(mcp){const bd=el(`<button class="btn">Fotos do Drive</button>`);bd.onclick=()=>abrirDrive(s);linha.appendChild(bd);}
-    if(s.imagem_asset){const rm=el(`<button class="btn perigo">Remover imagem</button>`);rm.onclick=()=>{delete s.imagem_asset;delete s.escurecer;delete s.imagem_posicao;mudou(true);};linha.appendChild(rm);}
+    const bb=el(`<button class="btn">Biblioteca</button>`);bb.onclick=()=>abrirBiblioteca(s);linha.appendChild(bb);
+    if(s.imagem_asset){const rm=el(`<button class="btn perigo">Remover imagem</button>`);rm.onclick=()=>{delete s.imagem_asset;delete s.imagem_credito;delete s.escurecer;delete s.imagem_posicao;mudou(true);};linha.appendChild(rm);}
     img.appendChild(linha);
     img.appendChild(el(`<p class="dica">Imagens de filmes e memes têm direito autoral. O uso fica a critério da Jaqueline.</p>`));
   }
@@ -888,6 +949,10 @@ function abrirDrive(slide){estado.modal={tipo:"drive",slide,status:"Carregando f
   listarDrive().then(f=>{if(!estado.modal||estado.modal.tipo!=="drive")return;estado.modal.fotos=f;estado.modal.status=f.length?"Escolha uma foto:":"A pasta está vazia. Coloque fotos nela no Google Drive.";renderModal();})
   .catch(e=>{if(!estado.modal||estado.modal.tipo!=="drive")return;estado.modal.status=mensagemDrive(e);estado.modal.fotos=[];renderModal();});}
 
+function abrirBiblioteca(slide){estado.modal={tipo:"biblioteca",slide,status:"Carregando imagens…",itens:null};renderModal();
+  assets.list().then(r=>{if(!estado.modal||estado.modal.tipo!=="biblioteca")return;const it=((r&&r.assets)||[]).filter(a=>/^image\//.test(a.contentType));estado.modal.itens=it;estado.modal.status=it.length?"Toque numa imagem para usar como fundo:":"Nenhuma imagem enviada ainda.";renderModal();})
+  .catch(()=>{if(!estado.modal)return;estado.modal.status="Não consegui carregar a biblioteca agora.";estado.modal.itens=[];renderModal();});}
+
 /* ================= exportar ================= */
 async function gerarPNG(post,slide,fmt,i,total){
   const palco=$("#palco");palco.innerHTML="";
@@ -955,12 +1020,19 @@ function renderModal(){
     if(m.arquivos){const s=el(`<button class="btn pri">${m.arquivos.length>1?"Baixar tudo (.zip)":"Baixar PNG"}</button>`);s.onclick=salvarArquivos;l.appendChild(s);}
     const f=el(`<button class="btn">Fechar</button>`);f.onclick=()=>{(m.imgs||[]).forEach(i=>URL.revokeObjectURL(i.url));estado.modal=null;renderModal();};l.appendChild(f);
     cx.appendChild(l);
+  }else if(m.tipo==="biblioteca"){
+    cx.innerHTML=`<h3>Biblioteca de imagens</h3><p>${esc(m.status)}</p><div class="galeria"></div><button class="btn">Fechar</button>`;
+    const g=cx.querySelector(".galeria");
+    const creditos={};for(const pp of posts.values())for(const sl of pp.slides||[])for(const al of sl.alternativas||[])creditos[al.asset]=al.credito;
+    for(const a of m.itens||[]){const b=el(`<button aria-label="Usar esta imagem"><img alt="" src="${esc(a.url)}" loading="lazy">${creditos[a.id]?`<small>${esc(creditos[a.id])}</small>`:""}</button>`);
+      b.onclick=()=>{const sl=m.slide;sl.imagem_asset=a.id;if(creditos[a.id])sl.imagem_credito=creditos[a.id];else delete sl.imagem_credito;delete sl.imagem_drive;if(sl.escurecer===undefined)sl.escurecer=.3;estado.modal=null;renderModal();if(estado.editor)mudou(true);};g.appendChild(b);}
+    cx.querySelector(".btn").onclick=()=>{estado.modal=null;renderModal();};
   }else if(m.tipo==="drive"){
     cx.innerHTML=`<h3>Fotos do Drive</h3><p class="dica">Pasta “Estúdio Jaqueline — Fotos para posts”</p><p>${esc(m.status)}</p><div class="tipos" id="lista-drive"></div><button class="btn">Fechar</button>`;
     const l=cx.querySelector("#lista-drive");
     for(const f of m.fotos||[]){const b=el(`<button><span class="ico">🖼️</span><span><b>${esc(f.nome)}</b><small>Usar como fundo deste slide</small></span></button>`);
       b.onclick=async()=>{m.status=`Importando ${f.nome}…`;m.fotos=[];renderModal();
-        try{const id=await importarDoDrive(f.id);const sl=m.slide;sl.imagem_asset=id;sl.imagem_drive={id:f.id,nome:f.nome};if(sl.escurecer===undefined)sl.escurecer=.3;estado.modal=null;renderModal();if(estado.editor){mudou(true);}}
+        try{const id=await importarDoDrive(f.id);const sl=m.slide;sl.imagem_asset=id;sl.imagem_drive={id:f.id,nome:f.nome};delete sl.imagem_credito;if(sl.escurecer===undefined)sl.escurecer=.3;estado.modal=null;renderModal();if(estado.editor){mudou(true);}}
         catch(e){m.status=mensagemDrive(e);renderModal();}};l.appendChild(b);}
     cx.querySelector(".btn").onclick=()=>{estado.modal=null;renderModal();};
   }else if(m.tipo==="copiar"){

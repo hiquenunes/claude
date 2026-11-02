@@ -64,7 +64,7 @@ Em `cor`, `fundo` e `destaque` dos blocos e em `fundo.cor` dá para usar o nome 
 - **Cores**: paleta Entrelaços acima. Fundo `explosao` fica liberado como exceção para piadas épicas.
 - **Imagens**: cenas de filmes Disney/Pixar (fornecidas pela usuária), fotos do consultório e brinquedos, ou os fundos ilustrados do renderizador.
 - **Emojis como adesivos** (contorno branco) fazem o papel dos brinquedos recortados do @omateuspsi.
-- **Tipografia**: arredondada e divertida (Fredoka, Baloo), máquina de escrever para o estilo faixa (Special Elite), manuscrita para comentários (Caveat), Nunito para textos de carrossel.
+- **Tipografia**: **Montserrat em todos os textos** (decisão da cliente), variando o peso: Black/Bold para títulos e piadas, Regular/Fina para textos de apoio. As fontes antigas (Fredoka, Baloo, Special Elite, Caveat, Nunito) continuam disponíveis para casos especiais pela aba Fontes.
 
 ### Estilos de texto disponíveis
 `faixa` · `meme` · `amarelo` · `titulo` · `sub` · `nota` · `balao` · `etiqueta` · `texto` (com `cartao: true` para o fundo branco arredondado) · `adesivos` · `espaco`

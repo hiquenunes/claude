@@ -23,11 +23,12 @@ Roda nos dias **1 e 15 de cada mês** (tarefa agendada). Objetivo: entregar no E
 4. **Distribuição** (ver `ESTILO.md`): cerca de 40% autismo, 25% TCC explicada para pais, 25% parentalidade, 10% interação/bastidores. Varie estilos visuais e fundos.
 5. **Escrever** cada post seguindo a skill: base teórica real e verificada (nunca inventar), checklists éticos e de TEA do `PERFIL.md`, legenda que traduz a teoria e termina com algo prático.
 6. **Fotos do Drive**: liste a pasta "Estúdio Jaqueline — Fotos para posts" (id `1nIY5FRi7s0l9qVtKvIFYTFsfZyKcg0Qm`) com o conector Google Drive (`search_files`, `parentId = '<id>'`). Se uma foto combinar com o post pelo nome do arquivo, coloque no slide `"imagem_drive": {"id": "<fileId>", "nome": "<título>"}`. **Não baixe a imagem**: a Jaqueline importa com um toque no Estúdio. Sem foto adequada, use o fundo ilustrado.
-7. **Cenas de filme**: preencha `imagem_sugerida` quando uma cena Disney/Pixar reforçar a piada.
-8. **Renderizar e revisar** cada peça com a `previa.png` (Read). Corrija texto cortado, sobreposição e erros de português.
-9. **Gravar no Estúdio**: ArtifactData `batch` com `set` na coleção `posts` (url `https://claude.ai/artifact/Suz1EGtTRhwhY4748peWYC`), `doc_id` = `id`, com `criado_em` = agora (ISO). Leia de volta (`list`) para confirmar.
-10. **Commit e push** dos `post.json` e `saida/`.
-11. **Resumo final** (é o que chega como notificação): quantas sugestões, uma linha por post (tema + por que agora) e o link do Estúdio. Diga também o que não deu para fazer (Instagram inacessível, Drive vazio etc.).
+7. **Fotos de banco de imagens**: quando uma foto real valorizar o post e não houver foto adequada no Drive, siga o passo 6 da skill (script `banco_imagens.py`, envio ao Estúdio, `imagem_asset` + `imagem_credito` + `alternativas`). Prefira fotos de objetos, brinquedos, ambientes e mãos a rostos de crianças.
+8. **Cenas de filme**: preencha `imagem_sugerida` quando uma cena Disney/Pixar reforçar a piada.
+9. **Renderizar e revisar** cada peça com a `previa.png` (Read). Corrija texto cortado, sobreposição e erros de português.
+10. **Gravar no Estúdio**: ArtifactData `batch` com `set` na coleção `posts` (url `https://claude.ai/artifact/Suz1EGtTRhwhY4748peWYC`), `doc_id` = `id`, com `criado_em` = agora (ISO). Leia de volta (`list`) para confirmar.
+11. **Commit e push** dos `post.json` e `saida/`.
+12. **Resumo final** (é o que chega como notificação): quantas sugestões, uma linha por post (tema + por que agora) e o link do Estúdio. Diga também o que não deu para fazer (Instagram inacessível, Drive vazio etc.).
 
 ## Datas que pedem conteúdo
 

@@ -33,6 +33,10 @@ Cada post é uma pasta `posts/AAAA-MM-<slug>/` com um `post.json`. O renderizado
   "escala_max": 1.15,                    // opcional: limite de quanto o texto pode crescer
   "ocupacao": 0.9,                       // opcional: fração da altura útil que o texto pode ocupar
   "cor_assinatura": "rgba(...)",         // opcional
+  "imagem_asset": "<id>",                // imagem guardada no Estúdio (upload, Drive ou banco de imagens)
+  "imagem_credito": "Foto: Ana / Pexels",// crédito da foto, quando veio de banco de imagens
+  "alternativas": [ { "asset": "<id>", "credito": "..." } ],  // outras fotos sugeridas para o slide
+  "imagem_drive": { "id": "<fileId>", "nome": "foto.jpg" },  // foto do Drive ainda não importada
   "blocos": [
     { "zona": "topo|centro|base", "estilo": "faixa", "texto": "linha", "tamanho": 66, "giro": -1,
       "cor": "#fff", "fundo": "#FFE07A", "destaque": "#FF4F7B", "cartao": true, "alinhar": "esquerda", "largura": 80 },
@@ -42,6 +46,11 @@ Cada post é uma pasta `posts/AAAA-MM-<slug>/` com um `post.json`. O renderizado
   "stickers": [ { "emoji": "🧸", "x": 14, "y": 8, "tamanho": 140, "giro": -10 } ]
 }
 ```
+
+### Fontes
+- Padrão: **Montserrat** em todos os textos (definida em `marca.json`), com peso padrão por estilo (título 900, meme/amarelo/etiqueta 800, subtítulo 700, nota/balão 600, faixa/texto 500).
+- `"fonte"` no post muda a fonte do post inteiro; no bloco, só daquele texto. Opções: `Montserrat`, `Fredoka`, `Nunito`, `Baloo 2`, `Caveat`, `Special Elite`, ou `original` (cada estilo com a sua fonte própria).
+- `"peso"` no bloco: 300 (fina), 400 (regular), 600 (semibold), 700 (bold), 900 (black). Só faz diferença em Montserrat e Nunito.
 
 ### Cores
 Em `cor`, `fundo`, `destaque`, `fundo.cor` e `fundo.cores` use os nomes da paleta de `marca.json` (`salvia`, `rose-escuro`, `cacau`…) ou hexadecimal.

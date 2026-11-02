@@ -187,6 +187,7 @@ function css() {
   return `
 ${ff('Fredoka', 'Fredoka-SemiBold.ttf', 600)}${ff('Fredoka', 'Fredoka-Bold.ttf', 700)}
 ${ff('Nunito', 'Nunito-SemiBold.ttf', 600)}${ff('Nunito', 'Nunito-ExtraBold.ttf', 800)}
+${[300,400,500,600,700,800,900].map((w) => ff('Montserrat', `Montserrat-${w}.ttf`, w) + `@font-face{font-family:'Montserrat';font-style:italic;src:url('file://${path.join(FONTES, `Montserrat-${w}-italic.ttf`)}');font-weight:${w}}`).join('')}
 ${ff('Baloo', 'Baloo2-ExtraBold.ttf', 800)}${ff('Caveat', 'Caveat-Bold.ttf', 700)}${ff('Elite', 'SpecialElite-Regular.ttf', 400)}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#111}
@@ -227,8 +228,21 @@ b,strong{font-weight:800}
 `;
 }
 
-function bloco(b) {
+// Fonte: Montserrat por padrão (marca.json), com peso por estilo; "original" usa a fonte própria de cada estilo.
+const FONTE_PADRAO = MARCA.fonte || 'Montserrat';
+const PESO_PADRAO = { faixa: 500, meme: 800, amarelo: 800, titulo: 900, sub: 700, nota: 600, texto: 500, balao: 600, etiqueta: 800 };
+const NOME_CSS = { 'Baloo 2': 'Baloo', 'Special Elite': 'Elite' };
+function estiloFonte(b, post) {
+  if (['adesivos', 'espaco'].includes(b.estilo)) return '';
+  const fam = b.fonte || post.fonte || FONTE_PADRAO;
+  if (fam === 'original') return b.peso ? `font-weight:${b.peso}` : '';
+  return `font-family:'${NOME_CSS[fam] || fam}','Noto Color Emoji',sans-serif;font-weight:${b.peso || PESO_PADRAO[b.estilo] || 600}`;
+}
+
+function bloco(b, post = {}) {
   const vars = [];
+  const fonte = estiloFonte(b, post);
+  if (fonte) vars.push(fonte);
   if (b.tamanho) vars.push(`--t:${b.tamanho}px`);
   if (b.cor) vars.push(`--cor:${cor(b.cor)}`);
   if (b.fundo) vars.push(`--fundo:${cor(b.fundo)}`);
@@ -267,7 +281,7 @@ function htmlSlide(slide, fmt, post, dirPost, i, total) {
   const veu = esc_ ? `<div class="veu" style="background:linear-gradient(rgba(0,0,0,${esc_}),rgba(0,0,0,${esc_ * 0.4}) 45%,rgba(0,0,0,${esc_}))"></div>` : '';
 
   const zonas = { topo: [], centro: [], base: [] };
-  for (const b of slide.blocos || []) zonas[b.zona || 'centro'].push(bloco(b));
+  for (const b of slide.blocos || []) zonas[b.zona || 'centro'].push(bloco(b, post));
 
   const stickers = (slide.stickers || [])
     .map((s) => {

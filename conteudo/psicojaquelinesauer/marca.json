@@ -22,5 +22,7 @@
     "secundaria": "#B97C66",
     "destaque": "#B97C66",
     "texto": "#4A3426"
-  }
+  },
+  "fonte": "Montserrat",
+  "_obs_fonte": "Fonte padrão de todos os textos. Use \"original\" no post (campo fonte) para voltar às fontes próprias de cada estilo."
 }
