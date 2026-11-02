@@ -25,7 +25,7 @@ A análise abaixo vem dos 5 prints enviados (o Instagram não abre neste ambient
 
 ## Formatos de meme reutilizáveis (troque o conteúdo, mantenha a estrutura)
 
-- **"Sou psicóloga infantil, mas…"** → quebra de expectativa sobre o que a terapia faz.
+- **"Trabalho com crianças, mas…"** → quebra de expectativa sobre o que a terapia faz ("Sou psicóloga infantil, mas…" só depois do CRP; ver `PERFIL.md`).
 - **"Imagina achar que…"** → ironia com um mito sobre terapia infantil.
 - **"Eu também faria X se… / imagina uma criança"** → empatia com a lógica do comportamento infantil.
 - **"[modo épico] / (contexto banal entre parênteses)"** → exagero dramático de situação de consultório.
@@ -34,9 +34,34 @@ A análise abaixo vem dos 5 prints enviados (o Instagram não abre neste ambient
 - **"Personagem X explicando Y"** → personagem Disney/Pixar como metáfora de um conceito (Divertida Mente = emoções; Marlin de Procurando Nemo = superproteção).
 - **POV / "quando…"** → cenas do dia a dia de pais.
 
+## Pilares de conteúdo
+
+| Pilar | Peso | Exemplos |
+|---|---|---|
+| Autismo (TEA) | ~40% | sensorial, rotina e previsibilidade, comunicação, crise × birra, escola e inclusão, irmãos, famílias atípicas, mitos, direitos (Abril Azul) |
+| TCC explicada para pais | ~25% | pensamento → emoção → comportamento, termômetro das emoções, escadinha do medo, ansiedade infantil |
+| Parentalidade e comportamento | ~25% | birra, limites, sono, telas, frustração, elogio |
+| Bastidores e interação | ~10% | stories com enquete/caixinha, brinquedos e jogos, o lúdico |
+
+## Identidade visual (Entrelaços)
+
+A paleta segue o logo do **Entrelaços Espaço Terapêutico** e a parede de madeira do espaço. Tons suaves e acolhedores; a cor viva vem dos emojis-adesivo e das imagens de filme, não do fundo.
+
+| Nome no post.json | Cor | Uso |
+|---|---|---|
+| `salvia` / `salvia-escuro` | #A9AC8D / #6F7656 | fundos, etiquetas, faixa de parede |
+| `rose` / `rose-escuro` | #DDC0AB / #B97C66 | destaques, capas, faixas de papel |
+| `nevoa` / `nevoa-escuro` | #C6CED2 / #7E95A1 | céu, linhas do caderno, etiquetas |
+| `areia` / `creme` | #DAC9B9 / #F6F0E7 | fundos claros, faixas |
+| `mostarda` | #D6B26E | acento (estrelas, etiquetas de alerta) |
+| `caramelo` / `madeira` | #BE7848 / #6B3A1A | piso, fundo `madeira` |
+| `cacau` | #4A3426 | texto escuro (no lugar do preto) |
+
+Em `cor`, `fundo` e `destaque` dos blocos e em `fundo.cor` dá para usar o nome (ex.: `"fundo": "rose"`) ou qualquer cor hexadecimal.
+
 ## Visual
 
-- **Cores**: vivas e de brinquedoteca (rosa, amarelo, azul-céu, verde, lilás) ou terrosas aconchegantes (consultório). Evitar visual corporativo ou clínico frio.
+- **Cores**: paleta Entrelaços acima. Fundo `explosao` fica liberado como exceção para piadas épicas.
 - **Imagens**: cenas de filmes Disney/Pixar (fornecidas pela usuária), fotos do consultório e brinquedos, ou os fundos ilustrados do renderizador.
 - **Emojis como adesivos** (contorno branco) fazem o papel dos brinquedos recortados do @omateuspsi.
 - **Tipografia**: arredondada e divertida (Fredoka, Baloo), máquina de escrever para o estilo faixa (Special Elite), manuscrita para comentários (Caveat), Nunito para textos de carrossel.
@@ -45,7 +70,7 @@ A análise abaixo vem dos 5 prints enviados (o Instagram não abre neste ambient
 `faixa` · `meme` · `amarelo` · `titulo` · `sub` · `nota` · `balao` · `etiqueta` · `texto` (com `cartao: true` para o fundo branco arredondado) · `adesivos` · `espaco`
 
 ### Fundos ilustrados disponíveis
-`quarto` (consultório com parede estampada) · `ceu` (nuvens + arco-íris) · `confete` · `explosao` (épico/dramático) · `lousa` · `papel` (caderno, ideal para carrossel) · `cor` (cor sólida com rabiscos)
+`madeira` (parede de ripas do Entrelaços) · `quarto` (parede estampada + piso de madeira) · `ceu` (nuvens + arco-íris) · `confete` · `explosao` (épico/dramático) · `lousa` · `papel` (caderno, ideal para carrossel) · `cor` (cor sólida com rabiscos)
 
 ## Regras de formato
 
@@ -60,4 +85,4 @@ A análise abaixo vem dos 5 prints enviados (o Instagram não abre neste ambient
 
 - 2 a 3 posts de feed (alternar meme único e carrossel educativo)
 - 3 a 5 sequências de stories avulsos (pelo menos 1 de interação)
-- Datas: Dia das Crianças (12/10), volta às aulas (fev/ago), férias, Halloween, Natal (presentes e telas), Dia das Mães/Pais, Abril Azul (conscientização do autismo, com muito cuidado e sem humor sobre a condição), Setembro Amarelo (sem humor; tom acolhedor).
+- Datas: Dia das Crianças (12/10), volta às aulas (fev/ago), férias, Halloween, Natal (presentes e telas), Dia das Mães/Pais, **Abril Azul e 2 de abril** (Dia Mundial de Conscientização do Autismo: data central do perfil; planejar série de posts com antecedência, tom educativo, humor só sobre o mundo não adaptado), 18 de junho (Dia do Orgulho Autista), Setembro Amarelo (sem humor; tom acolhedor).

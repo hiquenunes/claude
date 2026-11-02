@@ -6,6 +6,34 @@ Legenda dos marcadores: ✅ referência clássica e consolidada · ⚠️ usar c
 
 ---
 
+## TCC para crianças (abordagem da Jaqueline)
+
+| Conceito | Ideia para post | Referência |
+|---|---|---|
+| ✅ Modelo cognitivo: pensamento → emoção → comportamento | "o que você pensou quando isso aconteceu?" explicado com personagens | Beck, J. S. (2021). *Terapia Cognitivo-Comportamental: teoria e prática* (3ª ed.). Artmed. |
+| ✅ TCC adaptada à infância (linguagem lúdica, pais envolvidos) | por que a TCC com criança tem jogo, desenho e tarefa para casa | Friedberg, R. D., & McClure, J. M. (2004). *A prática clínica de terapia cognitiva com crianças e adolescentes*. Artmed. |
+| ✅ Programa Coping Cat para ansiedade infantil | "o gato que enfrenta os medos": reconhecer o corpo, os pensamentos, agir, se recompensar | Kendall, P. C. (1994). Treating anxiety disorders in children. *Journal of Consulting and Clinical Psychology*, 62(1), 100–110. |
+| ✅ Exposição gradual aos medos | "a escadinha do medo" | Kendall (1994) acima; Friedberg & McClure (2004). |
+| ✅ Psicoeducação emocional com recursos visuais (termômetro das emoções, semáforo) | termômetro da raiva em casa | Friedberg & McClure (2004). |
+
+## Autismo (TEA)
+
+| Conceito | Ideia para post | Referência |
+|---|---|---|
+| ✅ Critérios diagnósticos (comunicação/interação social + padrões restritos e repetitivos, incluindo critério B4 sensorial); níveis de suporte | "autismo não tem cara"; "nível de suporte não é nível de inteligência" | American Psychiatric Association (2022). *DSM-5-TR*. |
+| ✅ Diferenças de processamento sensorial | barulho, etiqueta de roupa, texturas de comida | Ben-Sasson, A. et al. (2009). *Journal of Autism and Developmental Disorders*, 39(1), 1–11. |
+| ✅ TCC adaptada para ansiedade em crianças autistas | ansiedade é comum no espectro e tem tratamento com evidência | Wood, J. J. et al. (2009). *Journal of Child Psychology and Psychiatry*, 50(3), 224–234. · Sofronoff, K., Attwood, T., & Hinton, S. (2005). *Journal of Child Psychology and Psychiatry*, 46(11), 1152–1160. · Reaven, J. et al. (2012). *Journal of Child Psychology and Psychiatry*, 53(4), 410–419 (programa *Facing Your Fears*). |
+| ✅ Práticas baseadas em evidência (suportes visuais, antecipação, modelação, histórias sociais etc.) | rotina visual em casa; avisar antes das transições | Hume, K. et al. (2021). Evidence-based practices for children, youth, and young adults with autism: Third generation review. *Journal of Autism and Developmental Disorders*, 51(11), 4013–4032. |
+| ✅ Histórias Sociais (Social Stories) | preparar a criança para o dentista, o aniversário, o primeiro dia de aula | Gray, C. A., & Garand, J. D. (1993). Social Stories. *Focus on Autistic Behavior*, 8(1), 1–10. |
+| ✅ Intervenção precoce (modelo Denver) | por que começar cedo faz diferença | Dawson, G. et al. (2010). *Pediatrics*, 125(1), e17–e23. |
+| ✅ Estereotipias/stimming têm função (autorregulação) | "deixa ele balançar as mãos" | Kapp, S. K. et al. (2019). "People should be allowed to do what they like". *Autism*, 23(7), 1782–1792. |
+| ✅ Camuflagem (masking) e seu custo | "na escola ela é ótima, em casa explode" | Hull, L. et al. (2017). "Putting on my best normal". *Journal of Autism and Developmental Disorders*, 47(8), 2519–2534. |
+| ✅ Problema da dupla empatia | a dificuldade de comunicação é de mão dupla | Milton, D. E. M. (2012). On the ontological status of autism: the 'double empathy problem'. *Disability & Society*, 27(6), 883–887. |
+| ✅ Preferências de linguagem da comunidade autista | "autista" vs "pessoa com autismo" | Kenny, L. et al. (2016). Which terms should be used to describe autism? *Autism*, 20(4), 442–462. |
+| ✅ Símbolo do quebra-cabeça e associações negativas | por que evitar 🧩 | Gernsbacher, M. A. et al. (2018). *Autism*, 22(2), 118–125. |
+| ✅ Prevalência (EUA): 1 em 36 crianças de 8 anos, dados de 2020 | Abril Azul | Maenner, M. J. et al. (2023). *MMWR Surveillance Summaries*, 72(2), 1–14 (CDC). **Há relatórios mais novos do CDC: confirmar o número mais recente antes de usar.** |
+| ✅ Direitos no Brasil | Abril Azul; escola; carteirinha | Lei nº 12.764/2012 (Política Nacional de Proteção dos Direitos da Pessoa com TEA, "Lei Berenice Piana"); Lei nº 13.977/2020 (Ciptea). 2 de abril: Dia Mundial de Conscientização do Autismo (ONU). |
+
 ## Emoções e regulação emocional
 
 | Conceito | Ideia para post | Referência |

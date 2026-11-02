@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-tea-sensorial",
+  "tipo": "feed",
+  "status": "rascunho",
+  "tema": "Sensibilidade sensorial no autismo não é manha",
+  "formato_meme": "\"Imagina achar que…\" (ironia com um mito)",
+  "imagem_sugerida": {
+    "filme": "Ratatouille (Pixar, 2007)",
+    "cena": "Remy de olhos fechados sentindo todos os cheiros da cozinha ao mesmo tempo (olfato super-sensível)",
+    "como_usar": "Salvar como imagens/fundo.jpg e renomear \"_imagem\" para \"imagem\". Sem a imagem, sai com o fundo de madeira do Entrelaços."
+  },
+  "base_teorica": [
+    {
+      "conceito": "Hiper ou hiporreatividade sensorial como critério diagnóstico do TEA",
+      "referencia": "American Psychiatric Association (2022). DSM-5-TR: Manual Diagnóstico e Estatístico de Transtornos Mentais (critério B4 do Transtorno do Espectro Autista).",
+      "como_aparece": "A reação ao barulho é uma diferença no processamento sensorial, não 'manha'."
+    },
+    {
+      "conceito": "Diferenças de modulação sensorial são frequentes no autismo",
+      "referencia": "Ben-Sasson, A. et al. (2009). A meta-analysis of sensory modulation symptoms in individuals with autism spectrum disorders. Journal of Autism and Developmental Disorders, 39(1), 1–11.",
+      "como_aparece": "Base do 'é muito comum' na legenda."
+    }
+  ],
+  "slides": [
+    {
+      "fundo": { "tipo": "madeira" },
+      "_imagem": "imagens/fundo.jpg",
+      "blocos": [
+        { "zona": "topo", "estilo": "amarelo", "texto": "Imagina achar que é manha…" },
+        { "zona": "centro", "estilo": "adesivos", "emojis": ["🔊", "🎧", "🌀"] },
+        { "zona": "base", "estilo": "amarelo", "texto": "…quando o liquidificador soa como um *show de rock* dentro da cabeça dele 🎸", "destaque": "#FFFFFF", "tamanho": 58 }
+      ]
+    }
+  ],
+  "legenda": "Para muitas crianças autistas, o mundo chega com o volume no máximo 🔊\n\nO barulho do liquidificador, a etiqueta da roupa, a luz do mercado, o cheiro forte do almoço… o que para a gente é fundo, para elas pode ser intenso de verdade. Ou o contrário: algumas buscam mais estímulo, giram, pulam, tocam tudo.\n\nIsso tem nome: diferenças no processamento sensorial. Estão tão ligadas ao autismo que fazem parte dos critérios diagnósticos do DSM-5-TR. E uma meta-análise (Ben-Sasson e colegas, 2009) mostrou que são bem mais frequentes em crianças no espectro.\n\nOu seja: não é manha, nem frescura, nem falta de limite. É o corpo dizendo \"isso está demais pra mim\".\n\nO que ajuda no dia a dia:\n📢 Avisar antes: \"vou ligar o liquidificador agora, tá?\"\n🎧 Ter à mão um abafador de ruído para lugares barulhentos\n👀 Observar o que antecede as crises: som, luz, cheiro, textura?\n🫶 Acolher primeiro, explicar depois\n\nCada criança tem um perfil sensorial único. Avaliar e montar estratégias é trabalho para a equipe que acompanha a criança (psicologia, terapia ocupacional e outros).\n\nVocê já percebeu algum gatilho sensorial aí em casa? Conta nos comentários 💬",
+  "hashtags": ["#autismo", "#tea", "#maternidadeatipica", "#processamentosensorial", "#psicologiainfantil", "#tcc", "#neurodiversidade"]
+}

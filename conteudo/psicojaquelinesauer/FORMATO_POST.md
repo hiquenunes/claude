@@ -25,7 +25,7 @@ Cada post é uma pasta `posts/AAAA-MM-<slug>/` com um `post.json`. O renderizado
 
 ```jsonc
 {
-  "fundo": { "tipo": "quarto" },        // quarto | ceu | confete | explosao | lousa | papel | cor
+  "fundo": { "tipo": "madeira" },       // madeira | quarto | ceu | confete | explosao | lousa | papel | cor
                                          // extras: "cor": "#hex", "cores": [...] (confete/ceu), "centro_livre": false (confete)
   "imagem": "imagens/fundo.jpg",         // opcional: substitui o fundo. Use "_imagem" para deixar desativado
   "imagem_posicao": "50% 30%",           // enquadramento (object-position)
@@ -42,6 +42,9 @@ Cada post é uma pasta `posts/AAAA-MM-<slug>/` com um `post.json`. O renderizado
   "stickers": [ { "emoji": "🧸", "x": 14, "y": 8, "tamanho": 140, "giro": -10 } ]
 }
 ```
+
+### Cores
+Em `cor`, `fundo`, `destaque`, `fundo.cor` e `fundo.cores` use os nomes da paleta de `marca.json` (`salvia`, `rose-escuro`, `cacau`…) ou hexadecimal.
 
 ### Texto
 - `**negrito**` · `*destaque colorido*` · `\n` quebra de linha.

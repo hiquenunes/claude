@@ -1,11 +1,26 @@
 {
   "perfil": "@psicojaquelinesauer",
   "assinatura": "@psicojaquelinesauer",
-  "cores": {
-    "primaria": "#FF6B8B",
-    "secundaria": "#4CC9F0",
-    "destaque": "#FFD23F",
-    "texto": "#2B2433"
+  "_origem_paleta": "Extraída do logo Entrelaços Espaço Terapêutico (sálvia, rosé, azul-névoa, areia) e da parede de madeira da foto. Os tons '-escuro' são versões mais fortes do mesmo matiz, para texto e destaques com contraste.",
+  "paleta": {
+    "salvia": "#A9AC8D",
+    "salvia-escuro": "#6F7656",
+    "rose": "#DDC0AB",
+    "rose-escuro": "#B97C66",
+    "nevoa": "#C6CED2",
+    "nevoa-escuro": "#7E95A1",
+    "areia": "#DAC9B9",
+    "creme": "#F6F0E7",
+    "mostarda": "#D6B26E",
+    "caramelo": "#BE7848",
+    "madeira": "#6B3A1A",
+    "madeira-escuro": "#44240F",
+    "cacau": "#4A3426"
   },
-  "_obs": "Paleta provisória (infantil e alegre). Substituir pelas cores oficiais da Jaqueline quando houver."
+  "cores": {
+    "primaria": "#6F7656",
+    "secundaria": "#B97C66",
+    "destaque": "#B97C66",
+    "texto": "#4A3426"
+  }
 }

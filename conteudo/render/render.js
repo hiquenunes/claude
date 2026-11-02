@@ -23,6 +23,10 @@ const { chromium } = require('playwright');
 const RAIZ = path.resolve(__dirname, '..');
 const FONTES = path.join(RAIZ, 'assets', 'fonts');
 const MARCA = JSON.parse(fs.readFileSync(path.join(RAIZ, 'psicojaquelinesauer', 'marca.json'), 'utf8'));
+const P = MARCA.paleta;
+// aceita nome da paleta ("salvia", "rose-escuro"…) ou qualquer cor CSS
+const cor = (v) => (v && P[v]) || v;
+const cores = (l) => l && l.map(cor);
 
 const FORMATOS = {
   feed: { w: 1080, h: 1350, kMax: 1.35, safe: { t: 90, r: 70, b: 120, l: 70 } },
@@ -69,22 +73,40 @@ const rabisco = (x, y, len, cor, esp = 8) => {
 const nuvem = (x, y, s, op = 0.95) =>
   `<g fill="#fff" opacity="${op}"><ellipse cx="${x}" cy="${y}" rx="${110 * s}" ry="${48 * s}"/><circle cx="${x - 45 * s}" cy="${y - 25 * s}" r="${48 * s}"/><circle cx="${x + 30 * s}" cy="${y - 45 * s}" r="${62 * s}"/></g>`;
 
+const cores_c = (f) => cores(f.cores) || [P['rose-escuro'], P.mostarda, P['nevoa-escuro'], P['salvia-escuro'], P.rose];
+
 const FUNDOS = {
+  // parede de ripas de madeira, como a do Entrelaços
+  madeira(w, h, rnd, f) {
+    const tons = ['#6B3A1A', '#5A2F13', '#7A4419', '#4E2F17', '#64391B', '#8A5326', '#5E3518'];
+    let r = '';
+    for (let y = 0; y < h; ) {
+      const alt = 70 + Math.floor(rnd() * 60);
+      r += `<rect x="0" y="${y}" width="${w}" height="${alt}" fill="${tons[Math.floor(rnd() * tons.length)]}"/>`;
+      for (let k = 0; k < 5; k++) {
+        const yy = y + 8 + rnd() * (alt - 16);
+        r += `<path d="M0,${yy} C${w * 0.3},${yy + (rnd() - 0.5) * 14} ${w * 0.7},${yy + (rnd() - 0.5) * 14} ${w},${yy}" stroke="rgba(255,220,180,${0.04 + rnd() * 0.06})" stroke-width="${1 + rnd() * 2}" fill="none"/>`;
+      }
+      r += `<rect x="0" y="${y + alt - 3}" width="${w}" height="3" fill="rgba(20,8,0,.45)"/>`;
+      y += alt;
+    }
+    return svg(w, h, r) + `<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%,rgba(255,190,120,.28),rgba(20,8,0,.45))"></div>`;
+  },
   ceu(w, h, rnd, f) {
-    const cores = f.cores || ['#FF8FA3', '#FFC36E', '#FFE66D', '#9BE3A6', '#7CC7FF', '#B79CFF'];
+    const cores_ = cores(f.cores) || [P['rose-escuro'], P.rose, P.mostarda, P.salvia, P['nevoa-escuro'], P.nevoa];
     let arco = '';
     const cx = w * 0.15, cy = h * 1.02;
-    cores.forEach((c, i) => {
+    cores_.forEach((c, i) => {
       const r = w * 0.62 - i * 46;
       arco += `<path d="M${cx - r},${cy} A${r},${r} 0 0 1 ${cx + r},${cy}" fill="none" stroke="${c}" stroke-width="46"/>`;
     });
     let nuv = '';
     for (let i = 0; i < 5; i++) nuv += nuvem(rnd() * w, 120 + rnd() * h * 0.45, 0.6 + rnd() * 0.7, 0.8 + rnd() * 0.2);
-    return `<div style="position:absolute;inset:0;background:linear-gradient(180deg,${f.cor || '#86CFF5'} 0%,#D9F2FF 100%)"></div>` + svg(w, h, nuv + arco);
+    return `<div style="position:absolute;inset:0;background:linear-gradient(180deg,${cor(f.cor) || P['nevoa-escuro']} 0%,${P.creme} 100%)"></div>` + svg(w, h, nuv + arco);
   },
   quarto(w, h, rnd, f) {
-    const parede = f.cor || '#EADCC8';
-    const cores = ['#C9673F', '#2F4B3A', '#E3A23B', '#7A5236'];
+    const parede = cor(f.cor) || P.creme;
+    const cores = [P['rose-escuro'], P['salvia-escuro'], P.mostarda, P['nevoa-escuro']];
     let pontos = '';
     const limite = h * 0.7;
     for (let i = 0; i < 900; i++)
@@ -92,14 +114,14 @@ const FUNDOS = {
     return (
       `<div style="position:absolute;inset:0;background:${parede}"></div>` +
       svg(w, h, `<g>${pontos}</g>`) +
-      `<div style="position:absolute;left:0;right:0;top:70%;height:9%;background:#6E7B62"></div>` +
-      `<div style="position:absolute;left:0;right:0;top:79%;bottom:0;background:linear-gradient(#CDB79A,#B79E80)"></div>` +
-      `<div style="position:absolute;left:18%;right:18%;bottom:4%;height:11%;border-radius:50%;background:#E9DDC9;opacity:.85"></div>` +
+      `<div style="position:absolute;left:0;right:0;top:70%;height:9%;background:${P.salvia}"></div>` +
+      `<div style="position:absolute;left:0;right:0;top:79%;bottom:0;background:repeating-linear-gradient(90deg,${P.caramelo} 0 180px,#A86737 180px 184px),${P.caramelo}"></div>` +
+      `<div style="position:absolute;left:18%;right:18%;bottom:4%;height:11%;border-radius:50%;background:${P.areia};opacity:.9"></div>` +
       `<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(255,240,210,.25),rgba(40,25,10,.35))"></div>`
     );
   },
   confete(w, h, rnd, f) {
-    const cores = f.cores || ['#FF6B8B', '#FFC23D', '#4CC9F0', '#7BD389', '#B388FF'];
+    const cores = cores_c(f);
     let c = '';
     for (let i = 0; i < 90; i++) {
       const x = rnd() * w, y = rnd() * h, cor = cores[i % cores.length], g = rnd() * 360;
@@ -111,7 +133,7 @@ const FUNDOS = {
       else if (t === 2) c += estrela(x, y, 14 + rnd() * 12, cor, g);
       else c += `<g transform="rotate(${g} ${x} ${y})">${rabisco(x, y, 70, cor, 7)}</g>`;
     }
-    return `<div style="position:absolute;inset:0;background:${f.cor || '#FFF1D6'}"></div>` + svg(w, h, c);
+    return `<div style="position:absolute;inset:0;background:${cor(f.cor) || P.creme}"></div>` + svg(w, h, c);
   },
   explosao(w, h, rnd, f) {
     const cx = w / 2, cy = h * 0.42;
@@ -133,18 +155,18 @@ const FUNDOS = {
       const x = rnd() * w, y = rnd() * h;
       d += i % 3 === 0 ? estrela(x, y, 22 + rnd() * 18, 'rgba(255,255,255,.18)', rnd() * 90) : `<g transform="rotate(${rnd() * 360} ${x} ${y})">${rabisco(x, y, 90, 'rgba(255,255,255,.16)', 6)}</g>`;
     }
-    return `<div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,${f.cor || '#3B6150'},#22392E)"></div>` + svg(w, h, d);
+    return `<div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,${cor(f.cor) || P['salvia-escuro']},#3E4330)"></div>` + svg(w, h, d);
   },
   papel(w, h, rnd, f) {
     let linhas = '';
-    for (let y = 60; y < h; y += 58) linhas += `<line x1="0" y1="${y}" x2="${w}" y2="${y}" stroke="#BFD7EA" stroke-width="2"/>`;
+    for (let y = 60; y < h; y += 58) linhas += `<line x1="0" y1="${y}" x2="${w}" y2="${y}" stroke="${P.nevoa}" stroke-width="2"/>`;
     let d = '';
-    const cores = ['#FF8FA3', '#FFC23D', '#7CC7FF', '#7BD389'];
+    const cores = [P['rose-escuro'], P.mostarda, P['nevoa-escuro'], P['salvia-escuro']];
     for (let i = 0; i < 6; i++) {
       const x = i % 2 ? w - 60 - rnd() * 120 : 60 + rnd() * 120, y = 80 + rnd() * (h - 160);
       d += i % 2 ? estrela(x, y, 26, cores[i % 4], rnd() * 60) : `<g transform="rotate(${rnd() * 60 - 30} ${x} ${y})">${rabisco(x - 40, y, 90, cores[i % 4], 8)}</g>`;
     }
-    return `<div style="position:absolute;inset:0;background:${f.cor || '#FFFBF0'}"></div>` + svg(w, h, linhas + `<line x1="110" y1="0" x2="110" y2="${h}" stroke="#F4A3A8" stroke-width="3"/>` + d);
+    return `<div style="position:absolute;inset:0;background:${cor(f.cor) || P.creme}"></div>` + svg(w, h, linhas + `<line x1="110" y1="0" x2="110" y2="${h}" stroke="#F4A3A8" stroke-width="3"/>` + d);
   },
   cor(w, h, rnd, f) {
     let d = '';
@@ -153,7 +175,7 @@ const FUNDOS = {
         const x = rnd() * w, y = rnd() * h;
         d += i % 2 ? estrela(x, y, 20 + rnd() * 14, 'rgba(255,255,255,.35)', rnd() * 90) : `<g transform="rotate(${rnd() * 360} ${x} ${y})">${rabisco(x, y, 80, 'rgba(255,255,255,.3)', 7)}</g>`;
       }
-    return `<div style="position:absolute;inset:0;background:${f.cor || '#FF8FA3'}"></div>` + svg(w, h, d);
+    return `<div style="position:absolute;inset:0;background:${cor(f.cor) || P.salvia}"></div>` + svg(w, h, d);
   },
 };
 
@@ -179,13 +201,13 @@ body{background:#111}
 .faixa,.meme,.amarelo,.titulo,.sub,.nota,.balao,.etiqueta{text-wrap:balance}
 mark{background:none;color:var(--destaque,${c.destaque})}
 /* faixas de papel com máquina de escrever (ref. psico.giovanavasc) */
-.faixa{font-family:Elite,'Noto Color Emoji';font-size:calc(var(--k)*var(--t,66px));line-height:1.6;color:#1E1C1A}
-.faixa span{background:var(--fundo,#FBF5E6);padding:.1em .38em;box-decoration-break:clone;-webkit-box-decoration-break:clone;box-shadow:0 6px 14px rgba(0,0,0,.18)}
+.faixa{font-family:Elite,'Noto Color Emoji';font-size:calc(var(--k)*var(--t,66px));line-height:1.6;color:${P.cacau}}
+.faixa span{background:var(--fundo,${P.creme});padding:.1em .38em;box-decoration-break:clone;-webkit-box-decoration-break:clone;box-shadow:0 6px 14px rgba(0,0,0,.18)}
 /* meme branco com contorno (ref. psicosuyanne / gabrielleiferreira.psi) */
 .meme{font-family:Fredoka,'Noto Color Emoji';font-weight:700;font-size:calc(var(--k)*var(--t,74px));line-height:1.12;color:var(--cor,#fff);
   text-shadow:0 0 1px #000,4px 0 0 #1B1B1B,-4px 0 0 #1B1B1B,0 4px 0 #1B1B1B,0 -4px 0 #1B1B1B,3px 3px 0 #1B1B1B,-3px 3px 0 #1B1B1B,3px -3px 0 #1B1B1B,-3px -3px 0 #1B1B1B,0 10px 24px rgba(0,0,0,.35)}
 /* amarelo com sombra (ref. omateuspsi) */
-.amarelo{font-family:Nunito,'Noto Color Emoji';font-weight:800;font-size:calc(var(--k)*var(--t,66px));line-height:1.18;color:var(--cor,#FFE14D);text-shadow:0 4px 0 rgba(0,0,0,.25),0 8px 26px rgba(0,0,0,.55)}
+.amarelo{font-family:Nunito,'Noto Color Emoji';font-weight:800;font-size:calc(var(--k)*var(--t,66px));line-height:1.18;color:var(--cor,#F6DA9C);text-shadow:0 4px 0 rgba(0,0,0,.25),0 8px 26px rgba(0,0,0,.55)}
 /* título de cartaz + subtítulo (ref. aprendonaterapia) */
 .titulo{font-family:Baloo,'Noto Color Emoji';font-weight:800;font-size:calc(var(--k)*var(--t,104px));line-height:1;color:var(--cor,#fff);letter-spacing:-1px;text-shadow:0 6px 0 rgba(0,0,0,.2),0 10px 30px rgba(0,0,0,.5)}
 .sub{font-family:Nunito,'Noto Color Emoji';font-weight:800;font-style:italic;font-size:calc(var(--k)*var(--t,48px));line-height:1.2;color:var(--cor,#fff);text-shadow:0 4px 18px rgba(0,0,0,.6)}
@@ -194,7 +216,7 @@ mark{background:none;color:var(--destaque,${c.destaque})}
 b,strong{font-weight:800}
 .cartao{background:var(--fundo,rgba(255,255,255,.94));border-radius:calc(var(--k)*44px);padding:calc(var(--k)*44px) calc(var(--k)*50px);box-shadow:0 14px 40px rgba(0,0,0,.16)}
 .etiqueta{font-family:Nunito,'Noto Color Emoji';font-weight:800;font-size:calc(var(--k)*var(--t,32px));letter-spacing:.06em;text-transform:uppercase;color:var(--cor,#fff);background:var(--fundo,${c.primaria});padding:.35em .9em;border-radius:999px}
-.balao{font-family:Fredoka,'Noto Color Emoji';font-weight:600;font-size:calc(var(--k)*var(--t,56px));line-height:1.2;color:var(--cor,#1E1C1A);background:var(--fundo,#fff);border-radius:calc(var(--k)*56px);padding:calc(var(--k)*34px) calc(var(--k)*46px);box-shadow:0 12px 30px rgba(0,0,0,.22)}
+.balao{font-family:Fredoka,'Noto Color Emoji';font-weight:600;font-size:calc(var(--k)*var(--t,56px));line-height:1.2;color:var(--cor,${P.cacau});background:var(--fundo,#fff);border-radius:calc(var(--k)*56px);padding:calc(var(--k)*34px) calc(var(--k)*46px);box-shadow:0 12px 30px rgba(0,0,0,.22)}
 .balao::after{content:'';position:absolute;left:18%;bottom:calc(var(--k)*-34px);border:calc(var(--k)*20px) solid transparent;border-top:calc(var(--k)*34px) solid var(--fundo,#fff)}
 .adesivos{display:flex;gap:calc(var(--k)*40px);justify-content:center;font-size:calc(var(--k)*var(--t,130px));line-height:1.15;padding-top:calc(var(--k)*20px)}
 .adesivos span{display:inline-block;font-family:'Noto Color Emoji';transform:rotate(var(--g));filter:drop-shadow(5px 0 0 #fff) drop-shadow(-5px 0 0 #fff) drop-shadow(0 5px 0 #fff) drop-shadow(0 -5px 0 #fff) drop-shadow(0 12px 14px rgba(0,0,0,.28))}
@@ -208,9 +230,9 @@ b,strong{font-weight:800}
 function bloco(b) {
   const vars = [];
   if (b.tamanho) vars.push(`--t:${b.tamanho}px`);
-  if (b.cor) vars.push(`--cor:${b.cor}`);
-  if (b.fundo) vars.push(`--fundo:${b.fundo}`);
-  if (b.destaque) vars.push(`--destaque:${b.destaque}`);
+  if (b.cor) vars.push(`--cor:${cor(b.cor)}`);
+  if (b.fundo) vars.push(`--fundo:${cor(b.fundo)}`);
+  if (b.destaque) vars.push(`--destaque:${cor(b.destaque)}`);
   if (b.giro) vars.push(`transform:rotate(${b.giro}deg)`);
   if (b.largura) vars.push(`max-width:${b.largura}%`);
   const cls = ['b', b.estilo || 'texto'];
@@ -255,7 +277,7 @@ function htmlSlide(slide, fmt, post, dirPost, i, total) {
     })
     .join('');
 
-  const corAss = slide.cor_assinatura || (['explosao', 'lousa', 'cor'].includes(f.tipo) || slide.imagem ? 'rgba(255,255,255,.85)' : 'rgba(30,28,26,.6)');
+  const corAss = slide.cor_assinatura || (['explosao', 'lousa', 'cor', 'madeira'].includes(f.tipo) || slide.imagem ? 'rgba(255,255,255,.85)' : 'rgba(30,28,26,.6)');
   const assBottom = fmt === 'stories' ? safe.b - 70 : 42;
   const contador = post.tipo === 'carrossel' && slide.mostrar_contador !== false && total > 1
     ? `<div class="assinatura" style="top:36px;bottom:auto;text-align:right;padding-right:60px;color:${corAss}">${i + 1}/${total}</div>` : '';

@@ -3,7 +3,7 @@
   "tipo": "feed",
   "status": "rascunho",
   "tema": "Raiva não se elimina, se regula",
-  "formato_meme": "\"Sou psicóloga infantil, mas...\" (faixas de papel)",
+  "formato_meme": "\"Trabalho com crianças, mas...\" (faixas de papel)",
   "imagem_sugerida": {
     "filme": "Divertida Mente (Pixar, 2015)",
     "cena": "Raiva com fogo saindo da cabeça, na sala de controle",
@@ -31,7 +31,7 @@
         {
           "zona": "centro",
           "estilo": "faixa",
-          "texto": "Sou psicóloga infantil",
+          "texto": "Trabalho com crianças",
           "giro": -1.5
         },
         {
@@ -52,7 +52,7 @@
           "estilo": "faixa",
           "texto": "(vou ensinar o que fazer com ela)",
           "tamanho": 46,
-          "fundo": "#FFE07A"
+          "fundo": "rose"
         }
       ],
       "stickers": [

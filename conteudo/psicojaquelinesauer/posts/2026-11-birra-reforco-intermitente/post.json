@@ -30,7 +30,7 @@
     {
       "fundo": {
         "tipo": "cor",
-        "cor": "#FF7E9D"
+        "cor": "rose-escuro"
       },
       "_imagem": "imagens/capa.jpg",
       "blocos": [
@@ -43,7 +43,7 @@
           "zona": "centro",
           "estilo": "balao",
           "texto": "o cérebro da criança anota:\n*VALE A PENA INSISTIR* 📝",
-          "destaque": "#FF4F7B"
+          "destaque": "rose-escuro"
         }
       ],
       "stickers": [
@@ -84,7 +84,7 @@
           "estilo": "texto",
           "cartao": true,
           "texto": "Quando um comportamento é recompensado *só de vez em quando* (o tal do reforçamento intermitente), ele fica **mais forte e mais difícil de sumir** do que se fosse recompensado sempre.\n\nFerster & Skinner já mostravam isso em 1957.",
-          "destaque": "#FF4F7B"
+          "destaque": "rose-escuro"
         }
       ]
     },
@@ -97,13 +97,13 @@
           "zona": "topo",
           "estilo": "etiqueta",
           "texto": "traduzindo pro mercado",
-          "fundo": "#4CC9F0"
+          "fundo": "nevoa-escuro"
         },
         {
           "zona": "centro",
           "estilo": "balao",
           "texto": "\"não… não… NÃO… …tá bom, toma.\"",
-          "fundo": "#FFE07A"
+          "fundo": "rose"
         },
         {
           "zona": "centro",
@@ -122,7 +122,7 @@
           "zona": "topo",
           "estilo": "etiqueta",
           "texto": "aviso importante",
-          "fundo": "#FFB020"
+          "fundo": "mostarda"
         },
         {
           "zona": "centro",
@@ -135,7 +135,7 @@
           "estilo": "texto",
           "cartao": true,
           "texto": "Quando você para de ceder, a birra pode ficar **mais intensa** por um tempo. Isso tem nome: *explosão de extinção* (Lerman & Iwata, 1995).\n\nNão é sinal de que deu errado. É a criança testando se a regra mudou mesmo.",
-          "destaque": "#FF4F7B"
+          "destaque": "rose-escuro"
         }
       ]
     },
@@ -148,7 +148,7 @@
           "zona": "topo",
           "estilo": "etiqueta",
           "texto": "o que ajuda",
-          "fundo": "#7BD389"
+          "fundo": "salvia-escuro"
         },
         {
           "zona": "centro",
@@ -162,21 +162,21 @@
           "estilo": "texto",
           "texto": "Siegel & Bryson chamam isso de *conectar e redirecionar*.",
           "tamanho": 34,
-          "destaque": "#FF4F7B"
+          "destaque": "rose-escuro"
         }
       ]
     },
     {
       "fundo": {
         "tipo": "confete",
-        "cor": "#FFF1D6"
+        "cor": "creme"
       },
       "blocos": [
         {
           "zona": "centro",
           "estilo": "titulo",
           "texto": "limite com afeto\nnão é frieza.",
-          "cor": "#2B2433",
+          "cor": "cacau",
           "tamanho": 96
         },
         {

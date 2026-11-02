@@ -1,6 +1,6 @@
 # Conteúdo de Instagram
 
-Agente de criação de posts para clientes de Instagram. Primeiro cliente: **@psicojaquelinesauer** (psicologia infantil).
+Agente de criação de posts para clientes de Instagram. Primeiro cliente: **@psicojaquelinesauer** (conteúdo educativo: psicologia infantil, TCC e autismo).
 
 ## Como usar
 

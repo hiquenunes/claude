@@ -58,14 +58,14 @@
     {
       "fundo": {
         "tipo": "cor",
-        "cor": "#B79CFF"
+        "cor": "salvia"
       },
       "blocos": [
         {
           "zona": "topo",
           "estilo": "etiqueta",
-          "texto": "spoiler da psicóloga",
-          "fundo": "#2B2433"
+          "texto": "spoiler da psicologia",
+          "fundo": "cacau"
         },
         {
           "zona": "centro",

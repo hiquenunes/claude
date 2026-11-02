@@ -19,11 +19,11 @@
   ],
   "slides": [
     {
-      "fundo": { "tipo": "confete", "cor": "#FFE7EE" },
+      "fundo": { "tipo": "confete", "cor": "creme" },
       "blocos": [
         { "zona": "topo", "estilo": "etiqueta", "texto": "caixinha da sinceridade 📦" },
-        { "zona": "topo", "estilo": "titulo", "texto": "qual frase você jurou que NUNCA ia falar pro seu filho…", "cor": "#2B2433", "tamanho": 88 },
-        { "zona": "topo", "estilo": "nota", "texto": "…e falou? 🙈", "tamanho": 96, "cor": "#FF4F7B" },
+        { "zona": "topo", "estilo": "titulo", "texto": "qual frase você jurou que NUNCA ia falar pro seu filho…", "cor": "cacau", "tamanho": 88 },
+        { "zona": "topo", "estilo": "nota", "texto": "…e falou? 🙈", "tamanho": 96, "cor": "rose-escuro" },
         { "zona": "centro", "estilo": "espaco", "altura": 380 },
         { "zona": "base", "estilo": "texto", "texto": "aqui é zona livre de julgamento. pais **suficientemente bons** também dizem “porque eu tô mandando” 😌", "tamanho": 36 }
       ],
