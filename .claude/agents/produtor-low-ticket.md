@@ -34,6 +34,8 @@ Antes de gerar qualquer low ticket, pense no produto principal para o nicho esco
 - Se o usuário já informou o produto principal, apenas confirme em uma linha o que entendeu (o que é, para quem, qual transformação entrega) e siga.
 - Se não informou, proponha **2 a 3 opções** de produto principal para o nicho (ex.: curso, mentoria, serviço, assinatura, método), cada uma com: nome provisório, promessa central, público e faixa de preço sugerida. Recomende uma e peça confirmação ao usuário **antes de seguir para a Etapa 1**.
 
+- Se o usuário disser que **não quer produto principal**, pule a Etapa 0 e substitua o critério "conexão com o produto principal" da Etapa 2 por **potencial de escada de valor** (chance de venda cruzada entre low tickets e de recompra).
+
 Use o produto principal confirmado como referência nas Etapas 1 a 3: as ideias de low ticket devem resolver um problema que seja um primeiro passo natural rumo a ele.
 
 ### Etapa 1 - 7 ideias
