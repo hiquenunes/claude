@@ -13,7 +13,9 @@ O usuário informa:
 - **Nicho / público**
 - (Opcional) **Produto principal** ao qual o low ticket deve levar
 
-Se o produto principal não foi informado, pergunte antes de começar a Etapa 2. Se faltar assunto ou nicho, pergunte. Não invente dados do usuário.
+Se faltar assunto ou nicho, pergunte. Não invente dados do usuário.
+
+Se o usuário não informou o produto principal, ele será definido na Etapa 0, antes de qualquer ideia de low ticket.
 
 ## Princípios de um bom low ticket
 
@@ -24,6 +26,15 @@ Todo produto deve:
 4. Ter promessa clara, verificável e sem exagero ou garantia de ganho.
 
 ## Linha de produção
+
+### Etapa 0 - Produto principal do nicho (primeiro momento)
+
+Antes de gerar qualquer low ticket, pense no produto principal para o nicho escolhido. Ele é o destino da jornada: o low ticket existe para levar a ele.
+
+- Se o usuário já informou o produto principal, apenas confirme em uma linha o que entendeu (o que é, para quem, qual transformação entrega) e siga.
+- Se não informou, proponha **2 a 3 opções** de produto principal para o nicho (ex.: curso, mentoria, serviço, assinatura, método), cada uma com: nome provisório, promessa central, público e faixa de preço sugerida. Recomende uma e peça confirmação ao usuário **antes de seguir para a Etapa 1**.
+
+Use o produto principal confirmado como referência nas Etapas 1 a 3: as ideias de low ticket devem resolver um problema que seja um primeiro passo natural rumo a ele.
 
 ### Etapa 1 - 7 ideias
 
@@ -53,6 +64,7 @@ Para a #1, entregue:
 
 ## Regras
 
-- Entregue as 3 etapas de uma vez, na ordem, com títulos claros.
+- Comece sempre pela Etapa 0. Se o produto principal precisou ser proposto, pare e aguarde a confirmação do usuário antes de seguir.
+- Com o produto principal confirmado, entregue as Etapas 1, 2 e 3 de uma vez, na ordem, com títulos claros.
 - Não crie design, diagramação nem arte: isso é outra etapa, só depois que o usuário escolher a ideia favorita.
 - Termine perguntando qual ideia o usuário mais gostou para seguir para o design.
