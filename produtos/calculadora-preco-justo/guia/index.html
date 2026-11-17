@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Calculadora do Preço Justo para Freelancers</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+:root{
+  --marrom:#3E1D0A; --bege:#E9D5C4; --laranja:#E07B2E; --verde:#4B5232;
+  --areia:#D8BFA9; --claro:#FBF3EA; --suave:#6E452E;
+}
+@page{ size:210mm 297mm; margin:0 }
+*{ box-sizing:border-box; margin:0; padding:0 }
+html{ -webkit-print-color-adjust:exact; print-color-adjust:exact }
+body{ font-family:'Inter',sans-serif; font-size:10.5pt; line-height:1.55; color:var(--marrom); background:var(--bege) }
+.page{ width:210mm; height:297mm; position:relative; overflow:hidden; padding:24mm 30mm 24mm 20mm; background:var(--bege); page-break-after:always; break-after:page }
+.page:last-child{ page-break-after:auto; break-after:auto }
+.label{ font-family:'JetBrains Mono',monospace; font-size:7.5pt; letter-spacing:.16em; text-transform:uppercase; color:var(--suave) }
+.top{ position:absolute; top:14mm; left:20mm }
+.foot{ position:absolute; bottom:12mm; left:20mm; right:30mm; display:flex; justify-content:space-between }
+h1{ font-family:'Montserrat',sans-serif; font-weight:300; font-size:30pt; line-height:1.12; letter-spacing:-.01em; margin:2mm 0 6mm }
+h2{ font-family:'Montserrat',sans-serif; font-weight:400; font-size:14pt; margin:8mm 0 3mm }
+p{ margin-bottom:3.2mm }
+p.lead{ font-size:12pt; line-height:1.55; margin-bottom:6mm }
+ul,ol{ margin:0 0 4mm 5mm } li{ margin-bottom:1.6mm }
+strong{ font-weight:600 }
+.rule{ height:.4mm; background:var(--suave); opacity:.55; margin:6mm 0 }
+.strip{ position:absolute; top:14mm; right:12mm; width:9mm; height:84mm; opacity:.42 }
+.strip svg{ width:100%; height:100% }
+/* cover */
+.cover{ background:var(--marrom); color:var(--bege); padding:0 }
+.cover .label{ color:#C9A98F }
+.cover .wrap{ position:absolute; left:20mm; right:20mm; top:98mm }
+.cover h1{ font-size:50pt; line-height:1.04; color:var(--bege); margin:4mm 0 8mm }
+.cover .sub{ font-size:13pt; line-height:1.5; max-width:112mm; color:#E2C8B3 }
+.cover .logo{ position:absolute; right:-3mm; top:12mm; width:92mm; height:92mm; border-radius:0; background:url(logo-trama.png) center/cover; opacity:1 }
+.cover .weave{ position:absolute; left:0; right:0; bottom:0; height:28mm; opacity:.55 }
+.cover .weave svg{ width:100%; height:100% }
+.cover .meta{ position:absolute; left:20mm; bottom:36mm; font-size:10pt; color:#E2C8B3; line-height:1.6 }
+.cover .meta b{ color:var(--bege); font-weight:600 }
+.cover .strip{ opacity:.55 }
+/* components */
+.card{ background:var(--claro); border:.3mm solid var(--areia); border-radius:2mm; padding:5mm 6mm; margin:4mm 0 }
+.card.dark{ background:var(--marrom); color:var(--bege); border:none }
+.card.green{ background:var(--verde); color:var(--bege); border:none }
+.card .label{ display:block; margin-bottom:2mm }
+.card.dark .label,.card.green .label{ color:#C9A98F }
+.formula{ font-family:'JetBrains Mono',monospace; font-size:9.5pt; line-height:1.7 }
+.step{ display:flex; gap:5mm; align-items:flex-start; margin:0 0 4.5mm }
+.step .n{ flex:0 0 11mm; height:11mm; border-radius:50%; background:var(--laranja); color:var(--marrom); font-family:'Montserrat',sans-serif; font-weight:600; font-size:12pt; display:flex; align-items:center; justify-content:center }
+.step .t{ flex:1; padding-top:.6mm }
+table{ width:100%; border-collapse:collapse; margin:3mm 0 5mm; font-size:9.5pt }
+th{ text-align:left; font-family:'JetBrains Mono',monospace; font-weight:500; font-size:7.5pt; letter-spacing:.12em; text-transform:uppercase; background:var(--marrom); color:var(--bege); padding:2.2mm 3mm }
+td{ padding:1.6mm 3mm; border-bottom:.3mm solid var(--areia) }
+td.r,th.r{ text-align:right }
+tr.sum td{ background:var(--areia); font-weight:600 }
+tr.res td{ background:var(--laranja); font-weight:600; font-size:10.5pt }
+tr.ver td{ background:var(--verde); color:var(--bege); font-weight:600 }
+.two{ display:grid; grid-template-columns:1fr 1fr; gap:5mm }
+.q{ font-style:italic }
+.check li{ list-style:none; position:relative; padding-left:7mm } .check{ margin-left:0 }
+.check li:before{ content:""; position:absolute; left:0; top:1.2mm; width:3.6mm; height:3.6mm; border:.4mm solid var(--marrom); border-radius:.8mm; background:var(--claro) }
+.big{ font-family:'Montserrat',sans-serif; font-weight:300; font-size:26pt; line-height:1.1 }
+.small{ font-size:8.5pt; color:var(--suave); line-height:1.5 }
+.line{ border-bottom:.35mm solid var(--suave); height:9mm; display:flex; align-items:flex-end; justify-content:space-between; font-size:10pt; padding-bottom:1mm }
+.line span:last-child{ font-family:'JetBrains Mono',monospace; font-size:8pt; color:var(--suave) }
+.line.hl{ background:var(--laranja); border-bottom:none; padding:0 3mm 0; align-items:center; font-weight:600; border-radius:1.5mm; margin:2mm 0 }
+.line.hl span:last-child{ color:var(--marrom) }
+</style>
+</head>
+<body>
+
+<!-- 1 · CAPA -->
+<section class="page cover">
+  <div class="label" style="position:absolute;left:20mm;top:14mm">Guia passo a passo · 01 / 13</div>
+  <div class="logo"></div>
+  <div class="wrap">
+    <div class="label">Para freelancers e autônomos</div>
+    <h1>Calculadora do Preço Justo</h1>
+    <p class="sub">Descubra quanto cobrar por hora e por projeto em 30 minutos, sem chute e sem trabalhar de graça.</p>
+  </div>
+  <div class="meta"><b>Acompanha:</b> planilha no Google Sheets, scripts de conversa e folha-resumo.</div>
+  <div class="weave"><svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="w1" width="22" height="22" patternUnits="userSpaceOnUse"><rect x="3" y="2" width="5" height="16" rx="1.5" fill="#8A5A40"/><rect x="11" y="12" width="9" height="5" rx="1.5" fill="#8A5A40"/><rect x="11" y="3" width="9" height="3" rx="1.5" fill="#6E452E"/></pattern></defs><rect width="100%" height="100%" fill="url(#w1)"/></svg></div>
+</section>
+
+<!-- 2 · ANTES DE COMEÇAR -->
+<section class="page">
+  <div class="label top">02 · Antes de começar</div>
+  <div class="strip"><svg xmlns="http://www.w3.org/2000/svg"><defs><pattern id="w2" width="22" height="22" patternUnits="userSpaceOnUse"><rect x="3" y="2" width="5" height="16" rx="1.5" fill="#6E452E"/><rect x="11" y="12" width="9" height="5" rx="1.5" fill="#6E452E"/><rect x="11" y="3" width="9" height="3" rx="1.5" fill="#6E452E"/></pattern></defs><rect width="100%" height="100%" fill="url(#w2)"/></svg></div>
+  <h1>Preço não se chuta.<br>Preço se calcula.</h1>
+  <p class="lead">Quase todo freelancer define o preço olhando o que os outros cobram ou o que acha que o cliente aceita. O resultado é trabalhar muito e sobrar pouco. Aqui você faz o caminho inverso: parte do que <strong>você precisa</strong> para viver e manter o negócio e chega ao menor preço que fecha a conta.</p>
+
+  <div class="step"><div class="n">1</div><div class="t"><strong>Quanto você precisa ganhar</strong> por mês, incluindo o que quer guardar.</div></div>
+  <div class="step"><div class="n">2</div><div class="t"><strong>Quanto custa manter o negócio</strong>, com ferramentas, impostos e imprevistos.</div></div>
+  <div class="step"><div class="n">3</div><div class="t"><strong>Quantas horas viram dinheiro</strong> de verdade, porque ninguém fatura 8 horas por dia.</div></div>
+  <div class="step"><div class="n">4</div><div class="t"><strong>Seu preço-hora e o preço do projeto</strong>, com margem de segurança.</div></div>
+
+  <div class="card">
+    <span class="label">O que ter à mão (10 minutos de busca)</span>
+    <ul class="check">
+      <li>Extrato e fatura do cartão dos últimos 3 meses</li>
+      <li>Lista das ferramentas e assinaturas que você usa no trabalho</li>
+      <li>Sua agenda dos últimos meses, para estimar o tempo gasto fora dos projetos</li>
+    </ul>
+  </div>
+  <div class="card dark">
+    <span class="label">Como a planilha funciona</span>
+    <p style="margin:0">Preencha só as <strong>células claras</strong>. As células escuras e laranja calculam sozinhas. A planilha já vem com um exemplo preenchido: troque pelos seus números.</p>
+  </div>
+  <div class="foot label"><span>Calculadora do Preço Justo</span><span>02 / 13</span></div>
+</section>
+
+<!-- 3 · PASSO 1 -->
+<section class="page">
+  <div class="label top">03 · Passo 1</div>
+  <h1>Quanto você precisa<br>ganhar por mês</h1>
+  <p class="lead">Este é o seu piso. Ele inclui as contas pessoais e o que você quer guardar. Abaixo disso, você está trabalhando para ficar no zero.</p>
+  <h2>Como fazer</h2>
+  <ol>
+    <li>Abra a aba <strong>“1 · Quanto preciso ganhar”</strong> da planilha.</li>
+    <li>Some seus gastos pessoais médios dos últimos 3 meses, categoria por categoria. Use a média, não o melhor mês.</li>
+    <li>Acrescente quanto você quer guardar por mês (reserva de emergência e metas).</li>
+    <li>A planilha soma tudo e mostra o total líquido que precisa sobrar para você.</li>
+  </ol>
+  <div class="card">
+    <span class="label">Três erros comuns</span>
+    <ul>
+      <li><strong>Esquecer gastos que não são mensais:</strong> IPVA, presentes, manutenção. Divida o valor anual por 12.</li>
+      <li><strong>Colocar zero na reserva:</strong> sem ela, qualquer mês fraco vira dívida.</li>
+      <li><strong>Misturar gasto do trabalho com gasto pessoal:</strong> os custos do trabalho entram no passo 2.</li>
+    </ul>
+  </div>
+  <div class="card green">
+    <span class="label">Exemplo do guia</span>
+    <p style="margin:0">Gastos pessoais de <strong>R$ 5.200</strong> mais <strong>R$ 600</strong> de reserva: precisa sobrar <strong>R$ 5.800</strong> por mês.</p>
+  </div>
+  <div class="foot label"><span>Calculadora do Preço Justo</span><span>03 / 13</span></div>
+</section>
+
+<!-- 4 · PASSO 2 -->
+<section class="page">
+  <div class="label top">04 · Passo 2</div>
+  <h1>Quanto custa manter<br>o seu negócio</h1>
+  <p class="lead">Tudo o que você paga para poder trabalhar entra na conta do preço. Se não entrar, quem paga é você, do próprio bolso.</p>
+  <h2>Como fazer</h2>
+  <ol>
+    <li>Abra a aba <strong>“2 · Custos do negócio”</strong>.</li>
+    <li>Liste ferramentas, internet e telefone do trabalho, equipamento, espaço, divulgação, contador e cursos.</li>
+    <li>Para equipamento, divida o valor pela vida útil em meses. Um computador de R$ 6.000 que dura 36 meses custa cerca de R$ 167 por mês.</li>
+    <li>Coloque o imposto: valor fixo mensal (como a guia do MEI) na lista, e imposto proporcional ao faturamento no campo de percentual.</li>
+    <li>Defina uma margem de lucro. Ela é o que sobra para o negócio crescer e cobrir meses ruins, além do seu salário.</li>
+  </ol>
+  <div class="card">
+    <span class="label">Atenção com impostos</span>
+    <p style="margin:0">Valores e regras de impostos mudam e dependem do seu regime. Confira o seu caso com um contador ou no portal oficial do governo antes de decidir. Os valores da planilha são apenas um exemplo.</p>
+  </div>
+  <div class="card green">
+    <span class="label">Exemplo do guia</span>
+    <p style="margin:0">Custos fixos do negócio de <strong>R$ 855</strong> por mês, margem de lucro de <strong>10%</strong> e imposto proporcional de 0% (só valor fixo).</p>
+  </div>
+  <div class="foot label"><span>Calculadora do Preço Justo</span><span>04 / 13</span></div>
+</section>
+
+<!-- 5 · PASSO 3 -->
+<section class="page">
+  <div class="label top">05 · Passo 3</div>
+  <h1>Suas horas realmente<br>faturáveis</h1>
+  <p class="lead">Este é o passo que a maioria pula, e é o que mais muda o resultado. Você não fatura 8 horas por dia: orçamento, e-mail, divulgação, estudo e administração também ocupam o seu tempo.</p>
+  <h2>Como fazer</h2>
+  <ol>
+    <li>Abra a aba <strong>“3 · Horas faturáveis”</strong>.</li>
+    <li>Informe quantos dias por semana e quantas horas por dia você trabalha.</li>
+    <li>Desconte férias, folgas, feriados e imprevistos do ano. Planejar descanso faz parte do preço.</li>
+    <li>Estime a porcentagem do tempo que vai para tarefas que você <strong>não cobra</strong>.</li>
+  </ol>
+  <div class="card dark">
+    <span class="label">A conta</span>
+    <p class="formula" style="margin:0">horas faturáveis por mês =<br>dias por semana × horas por dia × semanas trabalhadas ÷ 12 × (1 − % do tempo não cobrado)</p>
+  </div>
+  <div class="card">
+    <span class="label">Dica para estimar o tempo não cobrado</span>
+    <p style="margin:0">Olhe a agenda de duas semanas típicas e some o que não virou entrega para cliente: propostas, mensagens, reuniões sem cobrança, redes sociais, cursos, financeiro. Seja honesto: é a parte mais importante do cálculo.</p>
+  </div>
+  <div class="card green">
+    <span class="label">Exemplo do guia</span>
+    <p style="margin:0">5 dias × 8 horas, 45,6 semanas trabalhadas por ano, 35% do tempo não cobrado: <strong>98,8 horas faturáveis</strong> por mês. É bem menos que as 160 horas que muita gente usa na conta.</p>
+  </div>
+  <div class="foot label"><span>Calculadora do Preço Justo</span><span>05 / 13</span></div>
+</section>
+
+<!-- 6 · PASSO 4 -->
+<section class="page">
+  <div class="label top">06 · Passo 4</div>
+  <h1>Seu preço-hora<br>mínimo</h1>
+  <p class="lead">Com os três números anteriores, a conta é direta. A planilha faz tudo sozinha na aba <strong>“4 · Seu preço”</strong>.</p>
+  <div class="card dark">
+    <span class="label">A fórmula</span>
+    <p class="formula" style="margin:0">faturamento mínimo = (gastos pessoais + reserva + custos do negócio) ÷ (1 − imposto % − margem %)<br><br>preço-hora mínimo = faturamento mínimo ÷ horas faturáveis por mês</p>
+  </div>
+  <h2>Com os números do exemplo</h2>
+  <table>
+    <tr><th>Item</th><th class="r">Valor</th></tr>
+    <tr><td>Precisa ganhar (passo 1)</td><td class="r">R$ 5.800,00</td></tr>
+    <tr><td>Custos do negócio (passo 2)</td><td class="r">R$ 855,00</td></tr>
+    <tr><td>Total a cobrir por mês</td><td class="r">R$ 6.655,00</td></tr>
+    <tr><td>Margem de lucro</td><td class="r">10%</td></tr>
+    <tr class="sum"><td>Faturamento mínimo por mês</td><td class="r">R$ 7.394,44</td></tr>
+    <tr><td>Horas faturáveis por mês (passo 3)</td><td class="r">98,8</td></tr>
+    <tr class="res"><td>Preço-hora mínimo</td><td class="r">R$ 74,84</td></tr>
+  </table>
+  <p>Esse é o piso: abaixo dele você paga para trabalhar. Ele não é o preço ideal, e sim o menor valor que ainda fecha a conta.</p>
+  <div class="card">
+    <span class="label">Teste de realidade</span>
+    <p style="margin:0">Se esse freelancer cobrasse hoje <strong>R$ 60 por hora</strong>, precisaria vender cerca de <strong>123 horas</strong> por mês para chegar ao faturamento mínimo, mas só tem 98,8 horas faturáveis. Ou seja, mesmo lotado de trabalho, a conta não fecha. A planilha faz esse teste para você.</p>
+  </div>
+  <div class="foot label"><span>Calculadora do Preço Justo</span><span>06 / 13</span></div>
+</section>
+
+<!-- 7 · AJUSTE -->
+<section class="page">
+  <div class="label top">07 · Passo 5</div>
+  <h1>Do mínimo ao preço<br>recomendado</h1>
+  <p class="lead">O preço-hora mínimo é o piso. O preço que você leva para o cliente costuma ficar acima dele, e quanto acima depende de mercado, experiência e demanda.</p>
+  <h2>Faça três referências</h2>
+  <p>Pesquise o que três profissionais parecidos com você cobram (mesmo serviço, nível de experiência e região de atuação). Anote os valores e compare com o seu mínimo. Use isso como contexto, nunca para cobrar menos que o seu piso.</p>
+  <div class="two">
+    <div class="card">
+      <span class="label">Sinais para cobrar mais</span>
+      <ul>
+        <li>Sua agenda vive cheia ou tem fila de espera</li>
+        <li>Clientes chegam por indicação</li>
+        <li>Você tem casos e resultados para mostrar</li>
+        <li>Você é especialista em um nicho</li>
+        <li>O prazo do projeto é curto</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="label">Sinais para ficar perto do mínimo</span>
+      <ul>
+        <li>Você está começando e o portfólio é pequeno</li>
+        <li>Está validando um serviço novo</li>
+        <li>O nicho é muito concorrido e sem diferencial</li>
+        <li>Quer testar um cliente novo com projeto pequeno</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card green">
+    <span class="label">Exemplo do guia</span>
+    <p style="margin:0">Ajuste de <strong>20%</strong> sobre o mínimo: R$ 74,84 passa para <strong>R$ 89,81 por hora</strong>. Esse é o valor que ele leva para a conversa.</p>
+  </div>
+  <p class="small">O percentual de ajuste é uma decisão sua: a planilha deixa você testar vários valores e ver o efeito no preço.</p>
+  <div class="foot label"><span>Calculadora do Preço Justo</span><span>07 / 13</span></div>
+</section>
+
+<!-- 8 · PROJETO -->
+<section class="page">
+  <div class="label top">08 · Passo 6</div>
+  <h1>Do preço-hora ao<br>preço do projeto</h1>
+  <p class="lead">Cobrar por projeto costuma funcionar melhor que cobrar por hora: o cliente sabe o valor final e você é pago pelo resultado, não pelo tempo. Mas o preço do projeto precisa nascer da sua hora.</p>
+  <div class="card dark">
+    <span class="label">A conta</span>
+    <p class="formula" style="margin:0">preço do projeto = preço-hora recomendado × horas estimadas × (1 + margem de segurança)</p>
+  </div>
+  <h2>Como estimar as horas</h2>
+  <ul>
+    <li>Quebre o projeto em etapas e estime cada uma.</li>
+    <li>Inclua reuniões, mensagens e revisões, que costumam ficar de fora.</li>
+    <li>Se já fez algo parecido, use o tempo real que gastou da última vez.</li>
+  </ul>
+  <h2>Por que a margem de segurança</h2>
+  <p>Projetos atrasam, o cliente pede ajustes, o escopo cresce. A margem cobre isso sem você precisar renegociar a cada pedido. Combine também quantas revisões estão incluídas.</p>
+  <div class="card green">
+    <span class="label">Exemplo do guia</span>
+    <p style="margin:0">Projeto de <strong>20 horas</strong>, preço-hora de R$ 89,81 e margem de segurança de <strong>20%</strong>: R$ 89,81 × 20 × 1,2 = <strong>R$ 2.155,47</strong>.</p>
+  </div>
+  <div class="card">
+    <span class="label">Quando cobrar por hora mesmo</span>
+    <p style="margin:0">Quando o escopo é indefinido, quando o cliente pede ajustes sem fim ou quando é suporte contínuo. Nesses casos, informe o preço-hora e combine um limite de horas por mês.</p>
+  </div>
+  <div class="foot label"><span>Calculadora do Preço Justo</span><span>08 / 13</span></div>
+</section>
+
+<!-- 9 · FALAR O PREÇO -->
+<section class="page">
+  <div class="label top">09 · Passo 7</div>
+  <h1>Como falar o preço<br>sem se justificar</h1>
+  <p class="lead">Ter o número certo é metade do caminho. A outra metade é falar sem pedir desculpa.</p>
+  <h2>A ordem da conversa</h2>
+  <ol>
+    <li><strong>Entenda o resultado</strong> que o cliente quer, antes de falar de valor.</li>
+    <li><strong>Defina o escopo:</strong> o que está incluído, o que não está, quantas revisões.</li>
+    <li><strong>Diga o preço</strong> de forma direta e espere a resposta. Quem explica demais parece inseguro.</li>
+    <li><strong>Combine as condições:</strong> prazo, forma de pagamento e, por exemplo, uma entrada para reservar a agenda.</li>
+  </ol>
+  <h2>Frases prontas</h2>
+  <div class="card">
+    <span class="label">Para informar o valor</span>
+    <p class="q" style="margin:0">“O valor do projeto é R$ X. Inclui [entrega], [número] rodadas de revisão e prazo de [N] dias.”</p>
+  </div>
+  <div class="card">
+    <span class="label">Quando dizem que está caro</span>
+    <p class="q" style="margin:0 0 2mm">“Entendo. Posso ajustar o escopo para caber no seu orçamento. O que é mais importante para você nesse projeto?”</p>
+    <p class="q" style="margin:0">“Prefiro não baixar o valor, porque ele reflete o resultado que combinamos. Se quiser, começamos com uma versão menor.”</p>
+  </div>
+  <div class="card">
+    <span class="label">Quando pedem desconto</span>
+    <p class="q" style="margin:0">“Não consigo reduzir o preço mantendo a mesma entrega, mas consigo reduzir a entrega para chegar nesse valor. Quer ver como ficaria?”</p>
+  </div>
+  <p class="small">Dar desconto sem tirar escopo é pagar para trabalhar. Se for oferecer desconto, ofereça menos entrega.</p>
+  <div class="foot label"><span>Calculadora do Preço Justo</span><span>09 / 13</span></div>
+</section>
+
+<!-- 10 · REAJUSTE -->
+<section class="page">
+  <div class="label top">10 · Passo 8</div>
+  <h1>Como reajustar<br>clientes antigos</h1>
+  <p class="lead">Seu preço de hoje não deve ser o preço de dois anos atrás. Reajustar é uma rotina, não um conflito.</p>
+  <h2>Quando reajustar</h2>
+  <ul>
+    <li>A cada 12 meses, no mínimo.</li>
+    <li>Quando o escopo cresceu ou a entrega ficou mais complexa.</li>
+    <li>Quando seus custos e sua experiência mudaram.</li>
+  </ul>
+  <h2>Como reajustar</h2>
+  <ol>
+    <li>Calcule o novo valor com a planilha (a aba 4 recalcula quando você atualiza os números).</li>
+    <li>Considere a inflação do período, consultando o índice oficial atual, e some o ajuste por experiência e resultado.</li>
+    <li>Avise com antecedência, por exemplo 30 dias, e mantenha a mensagem simples.</li>
+    <li>Mostre o valor entregue ao longo do tempo, sem listar justificativas demais.</li>
+  </ol>
+  <div class="card">
+    <span class="label">Mensagem-modelo</span>
+    <p class="q" style="margin:0">“Oi, [nome]! Nossa parceria completa um ano e agradeço a confiança. A partir de [mês], o valor passa a ser R$ X, ajustado pelo período e pela evolução das entregas. Até lá, tudo segue como combinado. Qualquer dúvida, é só falar.”</p>
+  </div>
+  <div class="card green">
+    <span class="label">Lembrete</span>
+    <p style="margin:0">Alguns clientes podem não aceitar. Isso é parte do processo: o cliente que só fica pelo preço antigo costuma ser o que mais custa no fim.</p>
+  </div>
+  <div class="foot label"><span>Calculadora do Preço Justo</span><span>10 / 13</span></div>
+</section>
+
+<!-- 11 · EXEMPLO COMPLETO -->
+<section class="page">
+  <div class="label top">11 · Exemplo completo</div>
+  <h1 style="margin-bottom:4mm">Um freelancer, do<br>começo ao fim</h1>
+  <p class="lead" style="margin-bottom:3mm">Exemplo fictício para você conferir a lógica. Os valores são ilustrativos e não representam o que você deve cobrar.</p>
+  <div class="two">
+    <div>
+      <table>
+        <tr><th>Passo 1</th><th class="r">R$/mês</th></tr>
+        <tr><td>Moradia</td><td class="r">1.800</td></tr>
+        <tr><td>Contas da casa</td><td class="r">450</td></tr>
+        <tr><td>Alimentação</td><td class="r">1.100</td></tr>
+        <tr><td>Transporte</td><td class="r">400</td></tr>
+        <tr><td>Saúde</td><td class="r">350</td></tr>
+        <tr><td>Educação</td><td class="r">100</td></tr>
+        <tr><td>Dívidas</td><td class="r">300</td></tr>
+        <tr><td>Lazer e imprevistos</td><td class="r">500</td></tr>
+        <tr><td>Outros</td><td class="r">200</td></tr>
+        <tr><td>Reserva e metas</td><td class="r">600</td></tr>
+        <tr class="sum"><td>Total líquido</td><td class="r">5.800</td></tr>
+      </table>
+    </div>
+    <div>
+      <table>
+        <tr><th>Passo 2</th><th class="r">R$/mês</th></tr>
+        <tr><td>Ferramentas</td><td class="r">180</td></tr>
+        <tr><td>Internet e telefone</td><td class="r">120</td></tr>
+        <tr><td>Equipamento</td><td class="r">150</td></tr>
+        <tr><td>Marketing</td><td class="r">100</td></tr>
+        <tr><td>Contador e serviços</td><td class="r">100</td></tr>
+        <tr><td>Cursos</td><td class="r">80</td></tr>
+        <tr><td>Imposto fixo</td><td class="r">75</td></tr>
+        <tr><td>Outros</td><td class="r">50</td></tr>
+        <tr class="sum"><td>Total do negócio</td><td class="r">855</td></tr>
+      </table>
+      <table>
+        <tr><th>Passo 3</th><th class="r"></th></tr>
+        <tr><td>Semanas trabalhadas/ano</td><td class="r">45,6</td></tr>
+        <tr><td>Horas disponíveis/mês</td><td class="r">152</td></tr>
+        <tr><td>Tempo não cobrado</td><td class="r">35%</td></tr>
+        <tr class="sum"><td>Horas faturáveis/mês</td><td class="r">98,8</td></tr>
+      </table>
+    </div>
+  </div>
+  <table>
+    <tr><th>Resultado (passo 4 em diante)</th><th class="r"></th></tr>
+    <tr><td>Faturamento mínimo por mês (com margem de 10%)</td><td class="r">R$ 7.394,44</td></tr>
+    <tr class="ver"><td>Preço-hora mínimo</td><td class="r">R$ 74,84</td></tr>
+    <tr class="res"><td>Preço-hora recomendado (+20%)</td><td class="r">R$ 89,81</td></tr>
+    <tr class="res"><td>Projeto de 20 horas (margem de segurança de 20%)</td><td class="r">R$ 2.155,47</td></tr>
+  </table>
+  <div class="foot label"><span>Calculadora do Preço Justo</span><span>11 / 13</span></div>
+</section>
+
+<!-- 12 · FOLHA-RESUMO -->
+<section class="page">
+  <div class="label top">12 · Folha-resumo</div>
+  <h1>Seus números<br>em uma página</h1>
+  <p class="lead">Preencha com os resultados da planilha, imprima ou salve e deixe à vista na hora de orçar.</p>
+  <div class="line"><span>Preciso ganhar por mês (líquido)</span><span>R$</span></div>
+  <div class="line"><span>Custos do negócio por mês</span><span>R$</span></div>
+  <div class="line"><span>Imposto sobre o faturamento / margem de lucro</span><span>%  /  %</span></div>
+  <div class="line"><span>Faturamento mínimo por mês</span><span>R$</span></div>
+  <div class="line"><span>Horas faturáveis por mês</span><span>horas</span></div>
+  <div class="line hl"><span>Meu preço-hora mínimo</span><span>R$</span></div>
+  <div class="line"><span>Ajuste por experiência e mercado</span><span>%</span></div>
+  <div class="line hl"><span>Meu preço-hora recomendado</span><span>R$</span></div>
+  <div class="line"><span>Margem de segurança dos projetos</span><span>%</span></div>
+  <div class="line"><span>Data do próximo reajuste</span><span>__ / __ / ____</span></div>
+  <div class="card dark" style="margin-top:7mm">
+    <span class="label">Regra de ouro</span>
+    <p style="margin:0">Nunca fechar abaixo do preço-hora mínimo. Se precisar baixar o valor, reduza o escopo.</p>
+  </div>
+  <div class="foot label"><span>Calculadora do Preço Justo</span><span>12 / 13</span></div>
+</section>
+
+<!-- 13 · PRÓXIMOS PASSOS -->
+<section class="page cover">
+  <div class="label" style="position:absolute;left:20mm;top:14mm">13 · Próximos passos</div>
+  <div class="strip"><svg xmlns="http://www.w3.org/2000/svg"><defs><pattern id="w3" width="22" height="22" patternUnits="userSpaceOnUse"><rect x="3" y="2" width="5" height="16" rx="1.5" fill="#8A5A40"/><rect x="11" y="12" width="9" height="5" rx="1.5" fill="#8A5A40"/><rect x="11" y="3" width="9" height="3" rx="1.5" fill="#6E452E"/></pattern></defs><rect width="100%" height="100%" fill="url(#w3)"/></svg></div>
+  <div class="wrap" style="top:50mm">
+    <div class="label">Você chegou ao fim</div>
+    <h1 style="font-size:36pt;margin-bottom:8mm">Agora é levar o número para a conversa.</h1>
+    <p class="sub" style="max-width:120mm">Use a planilha sempre que seus custos mudarem, que você pegar um tipo novo de projeto ou que chegar a hora de reajustar. Os bônus que acompanham este material ajudam a transformar o cálculo em proposta, resposta e reajuste.</p>
+    <div style="height:10mm"></div>
+    <div class="card" style="background:#4A2A15;border:none;color:var(--bege)">
+      <span class="label" style="color:#C9A98F">Aviso importante</span>
+      <p style="margin:0;font-size:9.5pt">Este material é uma ferramenta de cálculo e orientação geral. Ele não substitui a orientação de um contador ou de outro profissional, e não garante resultados financeiros. Impostos, regras e valores mudam: confira o seu caso antes de decidir.</p>
+    </div>
+  </div>
+  <div class="weave"><svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="w4" width="22" height="22" patternUnits="userSpaceOnUse"><rect x="3" y="2" width="5" height="16" rx="1.5" fill="#8A5A40"/><rect x="11" y="12" width="9" height="5" rx="1.5" fill="#8A5A40"/><rect x="11" y="3" width="9" height="3" rx="1.5" fill="#6E452E"/></pattern></defs><rect width="100%" height="100%" fill="url(#w4)"/></svg></div>
+  <div class="label" style="position:absolute;left:20mm;bottom:34mm;color:#C9A98F;z-index:2">Calculadora do Preço Justo · 13 / 13</div>
+</section>
+
+</body>
+</html>
